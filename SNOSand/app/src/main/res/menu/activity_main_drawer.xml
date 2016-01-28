@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_data"
+            android:icon="@drawable/ic_action_data"
+            android:title="Dane" />
+        <item
+            android:id="@+id/nav_switch"
+            android:icon="@drawable/ic_action_switch"
+            android:title="Przełączniki" />
+        <item
+            android:id="@+id/nav_charts"
+            android:icon="@drawable/ic_action_chart"
+            android:title="Wykresy" />
+        <item
+            android:id="@+id/nav_alarms"
+            android:icon="@drawable/ic_action_alarms"
+            android:title="Alarmy" />
+    </group>
+
+    <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@drawable/ic_action_logout"
+                android:title="Wyloguj" />
+    </group>
+
+
+</menu>

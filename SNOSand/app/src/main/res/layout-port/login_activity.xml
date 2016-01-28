@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorAccent"
+    android:weightSum="1">
+
+    <ImageView
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imagelogo"
+        android:layout_gravity="center_horizontal"
+        android:src="@mipmap/ic_logo"
+        android:layout_weight="0.38"
+        android:layout_marginBottom="40dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/editText_login"
+        android:layout_gravity="center_horizontal"
+        android:layout_margin="25dp"
+        android:text="kubarat8@wp.pl"
+        android:textColor="@android:color/secondary_text_light"
+        android:background="@color/colorPrimary"
+        android:padding="10dp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/editText_password"
+        android:layout_gravity="center_horizontal"
+        android:text="test"
+        android:autoText="false"
+        android:hint="Wpisz hasło"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:padding="10dp"
+        android:background="@color/colorPrimary" />
+
+    <ImageView
+        android:layout_width="37dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.51" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Zaloguj"
+        android:id="@+id/button_login"
+        android:layout_margin="25dp"
+        android:layout_gravity="center_horizontal|bottom"
+        android:background="@color/colorPrimary" />
+</LinearLayout>
