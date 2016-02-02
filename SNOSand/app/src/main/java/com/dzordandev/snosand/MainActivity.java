@@ -22,8 +22,6 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-
-
     carDetails carInfo;
 
     TextView login_TextView, car_TextView;
@@ -99,7 +97,7 @@ public class MainActivity extends ActionBarActivity
                 break;
             case R.id.nav_switches:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.cointainer, FuelFragment.newInstance())
+                        .replace(R.id.cointainer, SwitchesFragment.newInstance())
                         .commit();
                 break;
             case R.id.nav_charts:
