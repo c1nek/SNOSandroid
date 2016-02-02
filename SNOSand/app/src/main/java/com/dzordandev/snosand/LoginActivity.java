@@ -67,7 +67,6 @@ public class LoginActivity  extends ActionBarActivity {
     carDetails car_details;
 
 
-
     List<RowBean> listaTankowan = new ArrayList<RowBean>();
 
     objectToIntent toIntent;
@@ -107,12 +106,14 @@ public class LoginActivity  extends ActionBarActivity {
             new Thread() {
                 public void run() {
 
-                    login = login_TextView.getText().toString();
-                    Log.i("login" ,login);
-                    pass = password_TextView.getText().toString();
-                    Log.i("pass" ,pass);
-                    token = QueryServer(login, pass);
 
+                    login = login_TextView.getText().toString();
+                    Log.i("login", login);
+                    pass = password_TextView.getText().toString();
+                    Log.i("pass", pass);
+                    //token = QueryServer(login, pass);
+
+                    /*
                     if(token.length() <25){
                         Toast.makeText(LoginActivity.this, "Niepoprawne dane logowania. Sprobój jeszcze raz.", Toast.LENGTH_SHORT).show();
                     }
@@ -130,239 +131,228 @@ public class LoginActivity  extends ActionBarActivity {
                         String fuel_json_string = QueryServer(token, 1);
                         Log.i("fuel_json_string", fuel_json_string);
                         ParseJSONFuel(fuel_json_string);
-                        ;
+                        */
 
 
+                    handler.sendEmptyMessage(0);
 
 
+                    runOnUiThread(new Runnable() {
 
-                        handler.sendEmptyMessage(0);
+                        public void run() {
 
+                            toIntent = new objectToIntent(listaTankowan, car_details);
 
-                        runOnUiThread(new Runnable() {
+                            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            myIntent.putExtra("carClass", toIntent); //Optional parameters
+                            LoginActivity.this.startActivity(myIntent);
 
-                            public void run() {
-
-                                toIntent = new objectToIntent(listaTankowan, car_details);
-
-                                Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
-                                myIntent.putExtra("carClass", toIntent); //Optional parameters
-                                LoginActivity.this.startActivity(myIntent);
-
-                            }
-                        });
+                        }
+                    });
 
 
-                    }} }.start();
-
-
-
-                handler = new Handler() {
-                    public void handleMessage(android.os.Message msg) {
-                        dialog.dismiss();
-                    };
-                };
-
-
-
-
-
-
-
-
-
-
-        }
-    };
-
-    private String QueryServer(String login, String password) {
-
-        String Result = null;
-
-        String qString = SERVERIP + loginString + "login=" + login + "&password=" + pass;
-
-        //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
-
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(qString);
-        try {
-            HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
-
-            if (httpEntity != null){
-                InputStream inputStream = httpEntity.getContent();
-                Reader in = new InputStreamReader(inputStream);
-                BufferedReader bufferedreader = new BufferedReader(in);
-                StringBuilder stringBuilder = new StringBuilder();
-
-                String stringReadLine = null;
-
-                while ((stringReadLine = bufferedreader.readLine()) != null) {
-                    stringBuilder.append(stringReadLine + "\n");
                 }
-                Result = stringBuilder.toString();
-            }
-
-        } catch (ClientProtocolException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-        return Result;
-    }
-
-    private String QueryServer(String _token){
-        String Result = null;
-
-        String qString = SERVERIP + getInfoString + "token=" + URLEncoder.encode(_token);
-
-        //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
-
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(qString);
+            }.start();
 
 
-        try {
-            HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
-
-            if (httpEntity != null){
-                InputStream inputStream = httpEntity.getContent();
-                Reader in = new InputStreamReader(inputStream);
-                BufferedReader bufferedreader = new BufferedReader(in);
-                StringBuilder stringBuilder = new StringBuilder();
-
-                String stringReadLine = null;
-
-                while ((stringReadLine = bufferedreader.readLine()) != null) {
-                    stringBuilder.append(stringReadLine + "\n");
+            handler = new Handler() {
+                public void handleMessage(android.os.Message msg) {
+                    dialog.dismiss();
                 }
-                Result = stringBuilder.toString();
-            }
 
-        } catch (ClientProtocolException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-        return Result;
-    }
-
-    private String QueryServer(String _token, int i){
-        String Result = null;
-
-        String qString = SERVERIP + getFuelString + URLEncoder.encode(_token);
-
-        //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
-
-        HttpClient httpClient = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(qString);
+                ;
+            };
 
 
-        try {
-            HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
-
-            if (httpEntity != null){
-                InputStream inputStream = httpEntity.getContent();
-                Reader in = new InputStreamReader(inputStream);
-                BufferedReader bufferedreader = new BufferedReader(in);
-                StringBuilder stringBuilder = new StringBuilder();
-
-                String stringReadLine = null;
-
-                while ((stringReadLine = bufferedreader.readLine()) != null) {
-                    stringBuilder.append(stringReadLine + "\n");
-                }
-                Result = stringBuilder.toString();
-            }
-
-        } catch (ClientProtocolException e) {
-
-            e.printStackTrace();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-        return Result;
-    }
-
-    private carDetails ParseJSON(String json) {
-
-        String _producent = "";
-        String _model = "";
-        int _fuel = 0;
-        int _mileage = 0;
-        int _motor = 0;
-
-        try {
-            JSONObject JsonObject = new JSONObject(json);
-
-            _producent = JsonObject.getString("mark");
-            _model = JsonObject.getString("model");
-            _fuel = JsonObject.getInt("fuel");
-            _mileage = JsonObject.getInt("mileage");
-            _motor = JsonObject.getInt("engineCapacity");
-
-        } catch (JSONException e) {
-            e.printStackTrace();
         }
 
-        carDetails car__details = new carDetails(_producent, _model, _fuel, _mileage, _motor);
-
-        return car__details;
-    }
-
-    private void ParseJSONFuel(String json) {
-
-        Date _data = null;
-        float _zalitr = 0;
-        int _przebiegl = 0;
-        int _litorow = 0;
-
-        try {
-            JSONObject JsonObject = new JSONObject(json);
-                JSONArray jsonfuel = JsonObject.getJSONArray("table");
-                    for(int i = 0; i < jsonfuel.length(); i++){
-                        JSONObject rec = jsonfuel.getJSONObject(i);
-                        _litorow = rec.getInt("liter");
-                        _zalitr = rec.getLong("price");
-                        _przebiegl = rec.getInt("mileage");
-                       // _data = rec.getInt("time");
-                        RowBean rzadek = new RowBean(_litorow, _data, _przebiegl, _zalitr);
-                        listaTankowan.add(rzadek);
+        ;
 
 
+        private String QueryServer(String login, String password) {
 
+            String Result = null;
 
+            String qString = SERVERIP + loginString + "login=" + login + "&password=" + pass;
 
+            //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(qString);
+            try {
+                HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
+
+                if (httpEntity != null) {
+                    InputStream inputStream = httpEntity.getContent();
+                    Reader in = new InputStreamReader(inputStream);
+                    BufferedReader bufferedreader = new BufferedReader(in);
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    String stringReadLine = null;
+
+                    while ((stringReadLine = bufferedreader.readLine()) != null) {
+                        stringBuilder.append(stringReadLine + "\n");
                     }
+                    Result = stringBuilder.toString();
+                }
 
+            } catch (ClientProtocolException e) {
 
+                e.printStackTrace();
+            } catch (IOException e) {
 
-
-
-
-
-        } catch (JSONException e) {
-            e.printStackTrace();
+                e.printStackTrace();
+            }
+            return Result;
         }
 
-    }
+        private String QueryServer(String _token) {
+            String Result = null;
 
-    @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
+            String qString = SERVERIP + getInfoString + "token=" + URLEncoder.encode(_token);
+
+            //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(qString);
+
+
+            try {
+                HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
+
+                if (httpEntity != null) {
+                    InputStream inputStream = httpEntity.getContent();
+                    Reader in = new InputStreamReader(inputStream);
+                    BufferedReader bufferedreader = new BufferedReader(in);
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    String stringReadLine = null;
+
+                    while ((stringReadLine = bufferedreader.readLine()) != null) {
+                        stringBuilder.append(stringReadLine + "\n");
+                    }
+                    Result = stringBuilder.toString();
+                }
+
+            } catch (ClientProtocolException e) {
+
+                e.printStackTrace();
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+            return Result;
         }
-    }
+
+        private String QueryServer(String _token, int i) {
+            String Result = null;
+
+            String qString = SERVERIP + getFuelString + URLEncoder.encode(_token);
+
+            //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
+
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpGet httpGet = new HttpGet(qString);
 
 
+            try {
+                HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
+
+                if (httpEntity != null) {
+                    InputStream inputStream = httpEntity.getContent();
+                    Reader in = new InputStreamReader(inputStream);
+                    BufferedReader bufferedreader = new BufferedReader(in);
+                    StringBuilder stringBuilder = new StringBuilder();
+
+                    String stringReadLine = null;
+
+                    while ((stringReadLine = bufferedreader.readLine()) != null) {
+                        stringBuilder.append(stringReadLine + "\n");
+                    }
+                    Result = stringBuilder.toString();
+                }
+
+            } catch (ClientProtocolException e) {
+
+                e.printStackTrace();
+            } catch (IOException e) {
+
+                e.printStackTrace();
+            }
+            return Result;
+        }
+
+        private carDetails ParseJSON(String json) {
+
+            String _producent = "";
+            String _model = "";
+            int _fuel = 0;
+            int _mileage = 0;
+            int _motor = 0;
+
+            try {
+                JSONObject JsonObject = new JSONObject(json);
+
+                _producent = JsonObject.getString("mark");
+                _model = JsonObject.getString("model");
+                _fuel = JsonObject.getInt("fuel");
+                _mileage = JsonObject.getInt("mileage");
+                _motor = JsonObject.getInt("engineCapacity");
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            carDetails car__details = new carDetails(_producent, _model, _fuel, _mileage, _motor);
+
+            return car__details;
+        }
+
+        private void ParseJSONFuel(String json) {
+
+            Date _data = null;
+            float _zalitr = 0;
+            int _przebiegl = 0;
+            int _litorow = 0;
+
+            try {
+                JSONObject JsonObject = new JSONObject(json);
+                JSONArray jsonfuel = JsonObject.getJSONArray("table");
+                for (int i = 0; i < jsonfuel.length(); i++) {
+                    JSONObject rec = jsonfuel.getJSONObject(i);
+                    _litorow = rec.getInt("liter");
+                    _zalitr = rec.getLong("price");
+                    _przebiegl = rec.getInt("mileage");
+                    // _data = rec.getInt("time");
+                    RowBean rzadek = new RowBean(_litorow, _data, _przebiegl, _zalitr);
+                    listaTankowan.add(rzadek);
+
+
+                }
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+
+  /*      public void onBackPressed() {
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            if (drawer.isDrawerOpen(GravityCompat.START)) {
+                drawer.closeDrawer(GravityCompat.START);
+            } else {
+                super.onBackPressed();
+            }
+        }*/
+
+
+    };
 }
+
+
+
 
 
 

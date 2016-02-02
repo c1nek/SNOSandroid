@@ -60,12 +60,12 @@ public class MainActivity extends ActionBarActivity
 
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         navigationView.addHeaderView(header);
-        login_TextView = (TextView) header.findViewById(R.id.loginTextView);
-        car_TextView = (TextView) header.findViewById(R.id.carTextView);
+ //       login_TextView = (TextView) header.findViewById(R.id.loginTextView);
+ //       car_TextView = (TextView) header.findViewById(R.id.carTextView);
 
 
-        login_TextView.setText(carInfo.getUser());
-        car_TextView.setText(carInfo.getProducent()+" " + carInfo.getModel());
+//        login_TextView.setText(carInfo.getUser());
+ //       car_TextView.setText(carInfo.getProducent()+" " + carInfo.getModel());
 
         fragmentManager= getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -97,7 +97,17 @@ public class MainActivity extends ActionBarActivity
                         .replace(R.id.cointainer, DataFragment.newInstance())
                         .commit();
                 break;
-            case R.id.nav_fuel:
+            case R.id.nav_switches:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.cointainer, FuelFragment.newInstance())
+                        .commit();
+                break;
+            case R.id.nav_charts:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.cointainer, FuelFragment.newInstance())
+                        .commit();
+                break;
+            case R.id.nav_alarms:
                 fragmentManager.beginTransaction()
                         .replace(R.id.cointainer, FuelFragment.newInstance())
                         .commit();

@@ -35,31 +35,32 @@ public class DataFragment extends Fragment {
 
         View myInflatedView = inflater.inflate(R.layout.data_layout, container,false);
 
-        carInfo = new carDetails(myActivity.getCarDetails());
+//        carInfo = new carDetails(myActivity.getCarDetails());
 
         producentValue = (TextView) myInflatedView.findViewById(R.id.brand);
-        producentValue.setText(carInfo.getProducent());
+       // producentValue.setText(carInfo.getProducent());
 
         modelValue = (TextView) myInflatedView.findViewById(R.id.textView11);
-        modelValue.setText(carInfo.getModel());
+       // modelValue.setText(carInfo.getModel());
 
         mileageValue = (TextView) myInflatedView.findViewById(R.id.textView9);
-        mileageValue.setText(String.valueOf(carInfo.getMileage()));
+        //mileageValue.setText(String.valueOf(carInfo.getMileage()));
 
         motorValue = (TextView) myInflatedView.findViewById(R.id.textView7);
-        motorValue.setText(String.valueOf(carInfo.getMotor()));
+        //motorValue.setText(String.valueOf(carInfo.getMotor()));
 
         fuelValue = (TextView) myInflatedView.findViewById(R.id.fueltype);
+        /*
         if(carInfo.getFuel() == 0){
-            fuelValue.setText("PB");
+            //fuelValue.setText("PB");
         } else if (carInfo.getFuel() == 1){
-            fuelValue.setText("ON");
+            //fuelValue.setText("ON");
         } else if (carInfo.getFuel() == 2){
-            fuelValue.setText("PB+LPG");
+           // fuelValue.setText("PB+LPG");
         }   else if (carInfo.getFuel() == 3){
-            fuelValue.setText("CNG");
+            //fuelValue.setText("CNG");
         }
-
+*/
 
 
 
