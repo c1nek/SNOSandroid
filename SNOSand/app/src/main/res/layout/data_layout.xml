@@ -1,96 +1,206 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/dataLay">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tableLayout1"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="0,1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Marka"
-        android:id="@+id/textView2"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/colorPrimary" />
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/brand"
-        android:layout_marginLeft="15dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Model"
-        android:id="@+id/textView10"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/colorPrimary" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="7.5dp"
+            android:layout_marginBottom="15dp"
+            android:background="#ff5252"
+            android:layout_marginTop="15dp" >
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView11"
-        android:layout_marginLeft="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Temperatura\nwewnątrz:"
+                android:id="@+id/textView2"
+                android:layout_gravity="left|top"
+                android:maxLines="2"
+                android:layout_margin="5dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Rodziaj paliwa"
-        android:id="@+id/textView4"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/colorPrimary" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="21\u00b0C"
+                android:id="@+id/tempInsideText"
+                android:layout_gravity="left|bottom"
+                android:textSize="50dp"
+                android:layout_margin="5dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/fueltype"
-        android:layout_marginLeft="15dp" />
+        </FrameLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Pojemność silnika (cm3)"
-        android:id="@+id/textView6"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/colorPrimary" />
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginBottom="15dp"
+            android:background="#81c784"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="7.5dp">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView7"
-        android:layout_marginLeft="15dp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Wilgotność\nwewnątrz:"
+                android:id="@+id/textView3"
+                android:layout_gravity="left|top"
+                android:maxLines="2"
+                android:layout_margin="5dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Przebieg"
-        android:id="@+id/textView8"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="15dp"
-        android:textColor="@color/colorPrimary" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="58%"
+                android:id="@+id/humText"
+                android:layout_gravity="left|bottom"
+                android:textSize="50dp"
+                android:layout_margin="5dp" />
+        </FrameLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/textView9"
-        android:layout_marginLeft="15dp" />
-</LinearLayout>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="7.5dp"
+            android:layout_marginBottom="15dp"
+            android:background="#ffee58" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Temperatura\nzewnątrz:"
+                android:id="@+id/textView4"
+                android:layout_gravity="left|top"
+                android:maxLines="2"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="12\u00b0C"
+                android:id="@+id/tempOutsideText"
+                android:layout_gravity="left|bottom"
+                android:textSize="50dp"
+                android:layout_margin="5dp" />
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginLeft="7.5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="#536dfe" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Ciśnienie\natmosferyczne:"
+                android:id="@+id/textView5"
+                android:layout_gravity="left|top"
+                android:maxLines="2"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="1003hPa"
+                android:id="@+id/pressureText"
+                android:layout_gravity="left|bottom"
+                android:textSize="35dp"
+                android:layout_margin="5dp" />
+        </FrameLayout>
+    </TableRow>
+
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" >
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="7.5dp"
+            android:layout_marginBottom="15dp"
+            android:background="#81c784" >
+
+            <android.widget.TextClock
+                android:id="@+id/hk_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:format24Hour="k:mm"
+                android:format12Hour="@null"
+                android:textSize="40dp"
+                android:layout_gravity="center" />
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="140dp"
+            android:layout_marginLeft="7.5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="#ffab40" >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Informacje:"
+                android:id="@+id/textView6"
+                android:layout_gravity="left|top"
+                android:layout_margin="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Użytkownik:\n kubarat8@wp.pl"
+                android:id="@+id/textView7"
+                android:layout_gravity="left|center_vertical"
+                android:layout_marginLeft="5dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:text="Urzadzenie:\n dzordanDev2016"
+                android:id="@+id/textView9"
+                android:layout_gravity="bottom|left"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="5dp" />
+        </FrameLayout>
+    </TableRow>
+
+</TableLayout>
