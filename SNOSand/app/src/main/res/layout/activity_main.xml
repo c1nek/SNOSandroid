@@ -8,6 +8,7 @@
     android:fitsSystemWindows="true"
     tools:openDrawer="start">
 
+    <include layout="@layout/cointainer_layout" />
 
 
     <android.support.design.widget.NavigationView

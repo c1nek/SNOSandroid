@@ -1,17 +1,38 @@
 package com.dzordandev.snosand;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+
+
+    carDetails carInfo;
+
+    TextView login_TextView, car_TextView;
+
+    FragmentManager fragmentManager;
+
+    List<RowBean> listaTankowan = new ArrayList<RowBean>();
+
+    objectToIntent toIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +49,28 @@ public class MainActivity extends ActionBarActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Intent i = getIntent();
+       // carInfo = new carDetails((carDetails)i.getSerializableExtra("carClass"));
+
+        toIntent = new objectToIntent((objectToIntent)i.getSerializableExtra("carClass"));
+        carInfo = toIntent.carInfo;
+        listaTankowan = toIntent.listaTankowan;
+
+
+        View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
+        navigationView.addHeaderView(header);
+        login_TextView = (TextView) header.findViewById(R.id.loginTextView);
+        car_TextView = (TextView) header.findViewById(R.id.carTextView);
+
+
+        login_TextView.setText(carInfo.getUser());
+        car_TextView.setText(carInfo.getProducent()+" " + carInfo.getModel());
+
+        fragmentManager= getSupportFragmentManager();
+        fragmentManager.beginTransaction()
+                .replace(R.id.cointainer, DataFragment.newInstance())
+                .commit();
     }
 
     @Override
@@ -39,48 +82,50 @@ public class MainActivity extends ActionBarActivity
             super.onBackPressed();
         }
     }
-    /*
-        @Override
-        public boolean onCreateOptionsMenu(Menu menu) {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.main, menu);
-            return true;
-        }
-    /*
-        @Override
-        public boolean onOptionsItemSelected(MenuItem item) {
-            // Handle action bar item clicks here. The action bar will
-            // automatically handle clicks on the Home/Up button, so long
-            // as you specify a parent activity in AndroidManifest.xml.
-            int id = item.getItemId();
 
-            //noinspection SimplifiableIfStatement
-            if (id == R.id.action_settings) {
-                return true;
-            }
-
-            return super.onOptionsItemSelected(item);
-        }
-    */
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
 
-        if (id == R.id.nav_data) {
-            // Handle the camera action
-        } else if (id == R.id.nav_switch) {
+        fragmentManager= getSupportFragmentManager();
 
-        } else if (id == R.id.nav_charts) {
 
-        } else if (id == R.id.nav_alarms) {
+        Class fragmentClass;
+        switch(item.getItemId()) {
+            case R.id.nav_data:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.cointainer, DataFragment.newInstance())
+                        .commit();
+                break;
+            case R.id.nav_fuel:
+                fragmentManager.beginTransaction()
+                        .replace(R.id.cointainer, FuelFragment.newInstance())
+                        .commit();
+                break;
 
-        } else if (id == R.id.nav_logout) {
-
+            case R.id.nav_logout:
+                Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+                myIntent.putExtra("carClass", 0); //Optional parameters
+                MainActivity.this.startActivity(myIntent);
+                break;
+            default:
+                fragmentClass = DataFragment.class;
         }
+
+
+
+
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    public carDetails getCarDetails() {
+        return carInfo;
+    }
+
+    public objectToIntent getTankowania() {
+        return toIntent;
     }
 }
