@@ -111,6 +111,8 @@ public class LoginActivity  extends ActionBarActivity {
                     Log.i("login", login);
                     pass = password_TextView.getText().toString();
                     Log.i("pass", pass);
+
+                    //TODO shared preferencef with ip, login, device, token
                     //token = QueryServer(login, pass);
 
                     /*
