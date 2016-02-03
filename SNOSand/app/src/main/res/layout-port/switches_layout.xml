@@ -48,7 +48,8 @@
                     android:text="LED 1: ON"
                     android:id="@+id/led1_status"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:textSize="17dp" />
             </FrameLayout>
 
             <FrameLayout
@@ -75,7 +76,8 @@
                     android:text="LED 2: ON"
                     android:id="@+id/led2_status"
                     android:layout_gravity="center_horizontal|bottom"
-                    android:layout_marginBottom="10dp" />
+                    android:layout_marginBottom="10dp"
+                    android:textSize="17dp" />
             </FrameLayout>
         </TableRow>
 
@@ -108,7 +110,8 @@
                         android:text="LED 3: ON"
                         android:id="@+id/led3_status"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:textSize="17dp" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -135,7 +138,8 @@
                         android:text="LED 4: ON"
                         android:id="@+id/led4_status"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:textSize="17dp" />
                 </FrameLayout>
             </TableRow>
 
@@ -168,7 +172,8 @@
                         android:text="LED RGB"
                         android:id="@+id/rgb_status"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:textSize="17dp" />
                 </FrameLayout>
 
                 <FrameLayout
@@ -195,7 +200,8 @@
                         android:text="Kontakt 1: ON"
                         android:id="@+id/switch1_status"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:textSize="17dp" />
                 </FrameLayout>
             </TableRow>
 
@@ -221,7 +227,8 @@
                         android:text="Kontakt 2: ON"
                         android:id="@+id/switch2_status"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:textSize="17dp" />
 
                     <ImageView
                         android:layout_width="86dp"
@@ -249,7 +256,8 @@
                         android:text="Kontakt 3: ON"
                         android:id="@+id/switch3_status"
                         android:layout_gravity="center_horizontal|bottom"
-                        android:layout_marginBottom="10dp" />
+                        android:layout_marginBottom="10dp"
+                        android:textSize="17dp" />
 
                     <ImageView
                         android:layout_width="86dp"
