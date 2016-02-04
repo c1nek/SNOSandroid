@@ -4,12 +4,13 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <permission android:name="com.example.gcm.permission.C2D_MESSAGE"
+    <permission android:name="com.dzordandev.snosand.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
-    <uses-permission android:name="com.example.gcm.permission.C2D_MESSAGE" />
+    <uses-permission android:name="com.dzordandev.snosand.permission.C2D_MESSAGE" />
+    <uses-permission android:name="android.permission.VIBRATE" />
 
 
 
@@ -30,6 +31,52 @@
         </activity>
         <activity android:label="snOS" android:name=".MainActivity"
             android:screenOrientation="portrait"/>
+
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+
+                <!-- Receives the actual messages. -->
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
+                <!-- Receives the registration id. -->
+                <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+
+                <category android:name="com.dzordandev.snosand" />
+
+            </intent-filter>
+        </receiver>
+
+        <!-- Enables message handling (e.g.detecting different downstream message types,
+     determining upstream send status, and automatically displaying simple
+     notifications on the app’s behalf) -->
+
+        <service
+            android:name=".MyGCMListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <!-- Handles the creation and updating of registration tokens -->
+
+        <service
+            android:name=".MyInstanceIDListenerService"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.gms.iid.InstanceID" />
+            </intent-filter>
+        </service>
+
+        <!-- To get the registration token -->
+
+        <service
+            android:name=".RegistrationIntentService"
+            android:exported="false" >
+        </service>
+
     </application>
 
 </manifest>
