@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
 /**
- * Created by marci on 26.01.2016.
+ * Created by marcin on 26.01.2016.
  */
 public class SwitchesFragment extends Fragment {
 

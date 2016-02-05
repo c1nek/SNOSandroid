@@ -21,6 +21,7 @@ package com.dzordandev.snosand;
 
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.media.RingtoneManager;
@@ -83,12 +84,19 @@ public class MyGcmListenerService extends GcmListenerService {
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
                 PendingIntent.FLAG_ONE_SHOT);
 
-        Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        long[] vibraPattern = {0,200,0,200,0,200,0,200};
+
+        //Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+        Uri defaultSoundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
+                   + "://" + getPackageName() + "/raw/alarm_sound");
+
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
-                //.setSmallIcon(R.drawable.ic_stat_ic_notification)
-                .setContentTitle("GCM Message")
+                .setSmallIcon(R.drawable.ic_action_alarms)
+                .setContentTitle("[snOS] ALARM")
                 .setContentText(message)
                 .setAutoCancel(true)
+                .setVibrate(vibraPattern)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
 

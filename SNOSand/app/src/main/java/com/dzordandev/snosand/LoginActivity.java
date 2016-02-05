@@ -11,7 +11,9 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
@@ -24,12 +26,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.CheckBox;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -53,11 +57,12 @@ import android.widget.Toast;
 public class LoginActivity  extends ActionBarActivity {
 
 
-    String SERVERIP = "http://192.168.43.18:8080/";
+    private static String SERVERIP = "http://192.168.43.18:8080/";
 
     ImageView logoImage;
     TextView login_TextView, password_TextView;
     Button login_Button;
+    CheckBox rememberMe;
     PopupWindow popupMessage;
     String token = "";
     String loginString = "/androidLogin?";
@@ -65,6 +70,10 @@ public class LoginActivity  extends ActionBarActivity {
     String getFuelString = "/refueling?token=";
     String login, pass;
     carDetails car_details;
+
+    private SharedPreferences loginPreferences;
+    private SharedPreferences.Editor loginPrefsEditor;
+    private Boolean saveLogin;
 
 
     List<RowBean> listaTankowan = new ArrayList<RowBean>();
@@ -87,6 +96,19 @@ public class LoginActivity  extends ActionBarActivity {
         logoImage = (ImageView) findViewById(R.id.imagelogo);
         login_TextView = (TextView) findViewById(R.id.editText_login);
         password_TextView = (TextView) findViewById(R.id.editText_password);
+        rememberMe = (CheckBox) findViewById(R.id.checkBox);
+
+        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPreferences.edit();
+
+        saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        if (saveLogin == true) {
+            login_TextView.setText(loginPreferences.getString("login", ""));
+            password_TextView.setText(loginPreferences.getString("password", ""));
+            rememberMe.setChecked(true);
+        }
+
+
         login_Button = (Button) findViewById(R.id.button_login);
 
         login_Button.setOnClickListener(loginButtonOnClickListener);
@@ -106,11 +128,27 @@ public class LoginActivity  extends ActionBarActivity {
             new Thread() {
                 public void run() {
 
+                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    imm.hideSoftInputFromWindow(login_TextView.getWindowToken(), 0);
+
 
                     login = login_TextView.getText().toString();
                     Log.i("login", login);
                     pass = password_TextView.getText().toString();
                     Log.i("pass", pass);
+
+                    loginPrefsEditor.putString("serverIP", SERVERIP);
+
+                    if (rememberMe.isChecked()) {
+                        loginPrefsEditor.putBoolean("saveLogin", true);
+                        loginPrefsEditor.putString("login", login);
+                        loginPrefsEditor.putString("password", pass);
+                        loginPrefsEditor.commit();
+                    } else {
+                        loginPrefsEditor.clear();
+                        loginPrefsEditor.commit();
+                    }
+
 
                     //TODO shared preferencef with ip, login, device, token
                     //token = QueryServer(login, pass);
@@ -123,6 +161,7 @@ public class LoginActivity  extends ActionBarActivity {
                         token = token.replace("\n", "").replace("\r", "");
                         Log.i("token", token);
 
+                        loginPrefsEditor.putString("token", token);
 
                         String json_string = QueryServer(token);
                         Log.i("json_string", json_string);

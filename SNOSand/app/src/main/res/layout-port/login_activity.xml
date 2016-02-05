@@ -40,12 +40,15 @@
         android:padding="10dp"
         android:background="@color/colorPrimary" />
 
-    <ImageView
-        android:layout_width="37dp"
+    <CheckBox
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView3"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.51" />
+        android:text="Zapamiętaj mnie"
+        android:id="@+id/checkBox"
+        android:layout_weight="0.34"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:buttonTint="@color/colorPrimaryDark"/>
 
     <Button
         android:layout_width="fill_parent"
@@ -53,6 +56,14 @@
         android:text="Zaloguj"
         android:id="@+id/button_login"
         android:layout_margin="25dp"
-        android:layout_gravity="center_horizontal|bottom"
-        android:background="@color/colorPrimary" />
+        android:background="@color/colorPrimary"
+        android:layout_marginBottom="25dp" />
+
+    <ImageView
+        android:layout_width="37dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView3"
+        android:layout_gravity="center_horizontal"
+        android:layout_weight="0.51" />
+
 </LinearLayout>

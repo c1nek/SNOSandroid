@@ -97,9 +97,9 @@ public class MainActivity extends ActionBarActivity
         Intent i = getIntent();
        // carInfo = new carDetails((carDetails)i.getSerializableExtra("carClass"));
 
-        toIntent = new objectToIntent((objectToIntent)i.getSerializableExtra("carClass"));
-        carInfo = toIntent.carInfo;
-        listaTankowan = toIntent.listaTankowan;
+//        toIntent = new objectToIntent((objectToIntent)i.getSerializableExtra("carClass"));
+  //      carInfo = toIntent.carInfo;
+  //      listaTankowan = toIntent.listaTankowan;
 
 
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
