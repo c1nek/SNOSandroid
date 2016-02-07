@@ -20,10 +20,10 @@
         android:id="@+id/editText_login"
         android:layout_gravity="center_horizontal"
         android:layout_margin="25dp"
-        android:text="kubarat8@wp.pl"
         android:textColor="@android:color/secondary_text_light"
         android:background="@color/colorPrimary"
-        android:padding="10dp" />
+        android:padding="10dp"
+        android:hint="Login" />
 
     <EditText
         android:layout_width="match_parent"
@@ -32,9 +32,8 @@
         android:ems="10"
         android:id="@+id/editText_password"
         android:layout_gravity="center_horizontal"
-        android:text="test"
         android:autoText="false"
-        android:hint="Wpisz hasło"
+        android:hint="Hasło"
         android:layout_marginLeft="25dp"
         android:layout_marginRight="25dp"
         android:padding="10dp"

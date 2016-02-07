@@ -44,10 +44,6 @@ public class SwitchesFragment extends Fragment {
 
         //TODO autoset na danych z jsona (inicjalizacja bogdan)
 
-        rgbledLayout = (FrameLayout) rootView.findViewById(R.id.frameLayout3);
-        rgb_button = (ImageView) rootView.findViewById(R.id.RGB_image);
-        rgb_button.setOnClickListener(rgbButtonOnClickListener);
-
         led1Layout = (FrameLayout) rootView.findViewById(R.id.led1_layout);
         led1_button = (ImageView) rootView.findViewById(R.id.imageView);
         led1_button.setOnClickListener(led1ButtonOnClickListener);
@@ -83,6 +79,10 @@ public class SwitchesFragment extends Fragment {
         switch3_button = (ImageView) rootView.findViewById(R.id.imageView9);
         switch3_button.setOnClickListener(switch3ButtonOnClickListener);
         switch3_textView = (TextView) rootView.findViewById(R.id.switch3_status);
+
+        rgbledLayout = (FrameLayout) rootView.findViewById(R.id.frameLayout3);
+        rgb_button = (ImageView) rootView.findViewById(R.id.RGB_image);
+        rgb_button.setOnClickListener(rgbButtonOnClickListener);
 
         return rootView;
     }

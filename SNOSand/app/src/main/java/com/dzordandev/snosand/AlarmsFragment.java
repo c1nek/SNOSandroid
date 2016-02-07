@@ -8,34 +8,31 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 /**
  * Created by marci on 26.01.2016.
  */
-public class FuelFragment extends Fragment {
+public class AlarmsFragment extends Fragment {
 
     private ListView listView1;
     private ArrayAdapter<String> adapter ;
 
     public MainActivity mineActivity;
 
-    objectToIntent tankowania;
-    List<RowBean> listaTankowan = new ArrayList<RowBean>();
+    //objectToIntent tankowania;
+    //List<RowBean> listaTankowan = new ArrayList<RowBean>();
 
 
 
-    public static FuelFragment newInstance() {
-        FuelFragment fragment = new FuelFragment();
+    public static AlarmsFragment newInstance() {
+        AlarmsFragment fragment = new AlarmsFragment();
         return fragment;
     }
 
-    public FuelFragment() {
+    public AlarmsFragment() {
     }
 
     @Override
@@ -47,14 +44,26 @@ public class FuelFragment extends Fragment {
 
 
 
-        tankowania = new objectToIntent(mineActivity.getTankowania());
-        listaTankowan = tankowania.listaTankowan;
+        //tankowania = new objectToIntent(mineActivity.getTankowania());
+        //listaTankowan = tankowania.listaTankowan;
 
 
         //SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
 
 
-        RowBean[] RowBean_data = listaTankowan.toArray(new RowBean[listaTankowan.size()]);
+        RowBean[] RowBean_data = new RowBean[]{
+                new RowBean(7, new Date(1454885698 ), (byte) 0),
+                new RowBean(6, new Date(1454885698 ), (byte) 1),
+                new RowBean(5, new Date(1454885698 ), (byte) 2),
+                new RowBean(4, new Date(1454885698 ), (byte) 3),
+                new RowBean(3, new Date(1454885698 ), (byte) 4),
+                new RowBean(2, new Date(1454885698 ), (byte) 0),
+                new RowBean(1, new Date(1454885698 ), (byte) 1),
+                new RowBean(2, new Date(1454885698 ), (byte) 0),
+                new RowBean(1, new Date(1454885698 ), (byte) 1),
+                new RowBean(2, new Date(1454885698 ), (byte) 0),
+                new RowBean(1, new Date(1454885698 ), (byte) 1),
+        };
 
 
 

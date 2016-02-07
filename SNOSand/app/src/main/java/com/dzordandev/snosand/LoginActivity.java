@@ -151,6 +151,7 @@ public class LoginActivity  extends ActionBarActivity {
 
 
                     //TODO shared preferencef with ip, login, device, token
+                    //TODO add deviceID to SP
                     //token = QueryServer(login, pass);
 
                     /*
@@ -206,8 +207,6 @@ public class LoginActivity  extends ActionBarActivity {
 
 
         }
-
-        ;
 
 
         private String QueryServer(String login, String password) {
@@ -349,6 +348,7 @@ public class LoginActivity  extends ActionBarActivity {
             return car__details;
         }
 
+        /*
         private void ParseJSONFuel(String json) {
 
             Date _data = null;
@@ -378,15 +378,7 @@ public class LoginActivity  extends ActionBarActivity {
 
         }
 
-
-  /*      public void onBackPressed() {
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-            if (drawer.isDrawerOpen(GravityCompat.START)) {
-                drawer.closeDrawer(GravityCompat.START);
-            } else {
-                super.onBackPressed();
-            }
-        }*/
+*/
 
 
     };

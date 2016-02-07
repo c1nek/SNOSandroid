@@ -5,19 +5,15 @@ import java.util.Date;
 
 public class RowBean implements Serializable {
 
-    public Date dataa;
+    public int id;
+    public Date dateDate;
+    public byte type;
 
-    public RowBean(int litrow, Date dataa, int przebieg, double koszt) {
-        this.litrow = litrow;
-        this.dataa = dataa;
-        this.przebieg = przebieg;
-        this.koszt = koszt;
+    public RowBean(int id, Date dateDate, byte type) {
+        this.id = id;
+        this.dateDate = dateDate;
+        this.type = type;
     }
-
-    public int przebieg;
-    public double koszt;
-    public int litrow;
-
 
 
 }

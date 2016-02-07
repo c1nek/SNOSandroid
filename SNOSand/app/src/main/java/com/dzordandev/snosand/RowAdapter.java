@@ -1,6 +1,5 @@
 package com.dzordandev.snosand;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -19,12 +17,12 @@ import java.util.Date;
 public class RowAdapter extends ArrayAdapter<RowBean> {
 
     Context context;
-    int layoutResourceId;
+    int layoutID;
     RowBean data[] = null;
 
-    public RowAdapter(Context context, int layoutResourceId, RowBean[] data) {
-        super(context, layoutResourceId, data);
-        this.layoutResourceId = layoutResourceId;
+    public RowAdapter(Context context, int layoutID, RowBean[] data) {
+        super(context, layoutID, data);
+        this.layoutID = layoutID;
         this.context = context;
         this.data = data;
     }
@@ -36,15 +34,13 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
 
         if(row == null)
         {
-            //ayoutInflater inflater = ((Activity)context).getLayoutInflater();
             LayoutInflater inflater = LayoutInflater.from(context);
-            row = inflater.inflate(layoutResourceId, parent, false);
+            row = inflater.inflate(layoutID, parent, false);
 
             holder = new RowBeanHolder();
-            holder.txt_data = (TextView)row.findViewById(R.id.Row_data);
-            holder.txt_przebieg = (TextView)row.findViewById(R.id.row_mileage);
-            holder.txt_kasa = (TextView)row.findViewById(R.id.row_pln);
-            holder.txt_litorw = (TextView)row.findViewById(R.id.row_liters);
+            holder.txt_ID = (TextView)row.findViewById(R.id.Row_ID);
+            holder.txt_date = (TextView)row.findViewById(R.id.row_Date);
+            holder.txt_icon = (ImageView)row.findViewById(R.id.row_icon);
 
             row.setTag(holder);
         }
@@ -57,21 +53,39 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
 
         Date date = null;
 
-        String newstring = new SimpleDateFormat("yyyy-MM-dd").format(object.dataa);
+        String formattedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(object.dateDate);
 
-        holder.txt_data.setText(newstring);
-        holder.txt_przebieg.setText(String.valueOf(object.przebieg) + " km");
-        holder.txt_kasa.setText(String.valueOf(object.koszt) + " zł");
-        holder.txt_litorw.setText(String.valueOf(object.litrow) + " l");
+        holder.txt_ID.setText(String.valueOf(object.id));
+        holder.txt_date.setText(formattedDate);
+
+        switch(object.type) {
+            case 0:
+                holder.txt_icon.setImageResource(R.mipmap.flood_alert);
+                break;
+            case 1:
+                holder.txt_icon.setImageResource(R.mipmap.fire_alert);
+                break;
+            case 2:
+                holder.txt_icon.setImageResource(R.mipmap.gas_alert);
+                break;
+            case 3:
+                holder.txt_icon.setImageResource(R.mipmap.hot_alert);
+                break;
+            case 4:
+                holder.txt_icon.setImageResource(R.mipmap.cold_alert);
+                break;
+            default:
+                break;
+        }
+
 
         return row;
     }
 
     static class RowBeanHolder
     {
-        TextView txt_data;
-        TextView txt_przebieg;
-        TextView txt_litorw;
-        TextView txt_kasa;
+        TextView txt_ID;
+        TextView txt_date;
+        ImageView txt_icon;
     }
 }

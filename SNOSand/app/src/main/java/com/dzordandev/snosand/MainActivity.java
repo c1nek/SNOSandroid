@@ -1,6 +1,5 @@
 package com.dzordandev.snosand;
 
-import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -9,14 +8,12 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.content.LocalBroadcastManager;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -95,7 +92,7 @@ public class MainActivity extends ActionBarActivity
         navigationView.setNavigationItemSelectedListener(this);
 
         Intent i = getIntent();
-       // carInfo = new carDetails((carDetails)i.getSerializableExtra("carClass"));
+
 
 //        toIntent = new objectToIntent((objectToIntent)i.getSerializableExtra("carClass"));
   //      carInfo = toIntent.carInfo;
@@ -123,6 +120,7 @@ public class MainActivity extends ActionBarActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
+            moveTaskToBack(true);
             super.onBackPressed();
         }
     }
@@ -148,12 +146,12 @@ public class MainActivity extends ActionBarActivity
                 break;
             case R.id.nav_charts:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.cointainer, FuelFragment.newInstance())
+                        .replace(R.id.cointainer, CharFragment.newInstance())
                         .commit();
                 break;
             case R.id.nav_alarms:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.cointainer, FuelFragment.newInstance())
+                        .replace(R.id.cointainer, AlarmsFragment.newInstance())
                         .commit();
                 break;
 
@@ -197,6 +195,8 @@ public class MainActivity extends ActionBarActivity
         super.onPause();
     }
 
+
+
     /**
      * Check the device to make sure it has the Google Play Services APK. If
      * it doesn't, display a dialog that allows users to download the APK from
@@ -217,4 +217,6 @@ public class MainActivity extends ActionBarActivity
         }
         return true;
     }
+
+
 }
