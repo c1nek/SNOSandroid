@@ -47,6 +47,7 @@ package com.dzordandev.snosand;
  * limitations under the License.
  */
 
+import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.ContentResolver;
@@ -107,6 +108,7 @@ public class MyGcmListenerService extends GcmListenerService {
      * @param message GCM message received.
      */
     private void sendNotification(String message) {
+        int alarmNumber;
         Intent intent = new Intent(this, ActivityMain.class);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent pendingIntent = PendingIntent.getActivity(this, 0 /* Request code */, intent,
@@ -114,12 +116,15 @@ public class MyGcmListenerService extends GcmListenerService {
 
         long[] vibraPattern = {0, 200, 0, 200, 0, 200, 0, 200};
 
-        //Uri defaultSoundUri= RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        alarmNumber = Integer.parseInt(message.substring(0,1));
+        message = message.substring(1, message.length());
 
         Uri defaultSoundUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE
                 + "://" + getPackageName() + "/raw/alarm_sound");
 
         NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this)
+                .setAutoCancel(true)
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(message))
                 .setSmallIcon(R.drawable.ic_action_alarms)
                 .setContentTitle("[snOS] ALARM")
                 .setContentText(message)
@@ -127,6 +132,27 @@ public class MyGcmListenerService extends GcmListenerService {
                 .setVibrate(vibraPattern)
                 .setSound(defaultSoundUri)
                 .setContentIntent(pendingIntent);
+
+        switch (alarmNumber) {
+            case 0:
+                notificationBuilder.setSmallIcon(R.mipmap.flood_alert);
+                break;
+            case 1:
+                notificationBuilder.setSmallIcon(R.mipmap.fire_alert);
+                break;
+            case 2:
+                notificationBuilder.setSmallIcon(R.mipmap.gas_alert);
+                break;
+            case 3:
+                notificationBuilder.setSmallIcon(R.mipmap.hot_alert);
+                break;
+            case 4:
+                notificationBuilder.setSmallIcon(R.mipmap.cold_alert);
+                break;
+            default:
+                notificationBuilder.setSmallIcon(R.drawable.ic_action_alarms);
+                break;
+        }
 
         NotificationManager notificationManager =
                 (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);

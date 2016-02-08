@@ -358,7 +358,7 @@ public class ActivityLogin extends ActionBarActivity {
         dialog = new ProgressDialog(this);
         dialog.setMessage("Proszę czekać.");
         dialog.setCancelable(false);
-        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
 
 
     }
