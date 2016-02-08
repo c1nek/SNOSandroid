@@ -9,14 +9,14 @@ import android.view.ViewGroup;
 /**
  * Created by marci on 26.01.2016.
  */
-public class CharFragment extends Fragment {
+public class FragmentChar extends Fragment {
 
-    public static CharFragment newInstance() {
-        CharFragment fragment = new CharFragment();
+    public static FragmentChar newInstance() {
+        FragmentChar fragment = new FragmentChar();
         return fragment;
     }
 
-    public CharFragment() {
+    public FragmentChar() {
     }
 
     @Override
@@ -28,7 +28,7 @@ public class CharFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(1);
+        ((ActivityMain) activity).onSectionAttached(1);
     }
     */
 }

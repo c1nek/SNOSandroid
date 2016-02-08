@@ -54,7 +54,7 @@ import android.widget.Toast;
 /**
  * Created by dzordanDev on 2016.
  */
-public class LoginActivity  extends ActionBarActivity {
+public class ActivityLogin extends ActionBarActivity {
 
 
     private static String SERVERIP = "http://192.168.43.18:8080/";
@@ -128,7 +128,7 @@ public class LoginActivity  extends ActionBarActivity {
             new Thread() {
                 public void run() {
 
-                    InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(login_TextView.getWindowToken(), 0);
 
 
@@ -156,7 +156,7 @@ public class LoginActivity  extends ActionBarActivity {
 
                     /*
                     if(token.length() <25){
-                        Toast.makeText(LoginActivity.this, "Niepoprawne dane logowania. Sprobój jeszcze raz.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(ActivityLogin.this, "Niepoprawne dane logowania. Sprobój jeszcze raz.", Toast.LENGTH_SHORT).show();
                     }
                     else {
                         token = token.replace("\n", "").replace("\r", "");
@@ -185,9 +185,9 @@ public class LoginActivity  extends ActionBarActivity {
 
                             toIntent = new objectToIntent(listaTankowan, car_details);
 
-                            Intent myIntent = new Intent(LoginActivity.this, MainActivity.class);
+                            Intent myIntent = new Intent(ActivityLogin.this, ActivityMain.class);
                             myIntent.putExtra("carClass", toIntent); //Optional parameters
-                            LoginActivity.this.startActivity(myIntent);
+                            ActivityLogin.this.startActivity(myIntent);
 
                         }
                     });

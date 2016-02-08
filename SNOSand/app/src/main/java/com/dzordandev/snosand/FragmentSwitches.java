@@ -16,7 +16,7 @@ import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 /**
  * Created by marcin on 26.01.2016.
  */
-public class SwitchesFragment extends Fragment {
+public class FragmentSwitches extends Fragment {
 
 
     ColorPicker cp;
@@ -28,12 +28,12 @@ public class SwitchesFragment extends Fragment {
     ImageView rgb_button, led1_button, led2_button, led3_button, led4_button, switch1_button, switch2_button, switch3_button;
     TextView led1_textView, led2_textView, led3_textView, led4_textView, switch1_textView, switch2_textView, switch3_textView;
 
-    public static SwitchesFragment newInstance() {
-        SwitchesFragment fragment = new SwitchesFragment();
+    public static FragmentSwitches newInstance() {
+        FragmentSwitches fragment = new FragmentSwitches();
         return fragment;
     }
 
-    public SwitchesFragment() {
+    public FragmentSwitches() {
     }
 
     @Override
@@ -90,11 +90,10 @@ public class SwitchesFragment extends Fragment {
     private ImageView.OnClickListener rgbButtonOnClickListener = new ImageView.OnClickListener() {
         public void onClick(View arg0) {
             cp.show();
-            okColor = (Button)cp.findViewById(R.id.okColorButton);
+            okColor = (Button) cp.findViewById(R.id.okColorButton);
             okColor.setOnClickListener(ColorPickerButtonOnClickListener);
         }
-        };
-
+    };
 
 
     private ImageView.OnClickListener led1ButtonOnClickListener = new ImageView.OnClickListener() {
@@ -102,12 +101,11 @@ public class SwitchesFragment extends Fragment {
             //TODO send request to server
             //TODO thread and loading screen
 
-            if(led1_textView.getText() == "LED 1: OFF") {
+            if (led1_textView.getText() == "LED 1: OFF") {
 
                 led1Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
                 led1_textView.setText("LED 1: ON");
-            }
-            else{
+            } else {
                 led1Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
                 led1_textView.setText("LED 1: OFF");
             }
@@ -119,12 +117,11 @@ public class SwitchesFragment extends Fragment {
             //TODO send request to server
             //TODO thread and loading screen
 
-            if(led2_textView.getText() == "LED 2: OFF") {
+            if (led2_textView.getText() == "LED 2: OFF") {
 
                 led2Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
                 led2_textView.setText("LED 2: ON");
-            }
-            else{
+            } else {
                 led2Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
                 led2_textView.setText("LED 2: OFF");
             }
@@ -136,12 +133,11 @@ public class SwitchesFragment extends Fragment {
             //TODO send request to server
             //TODO thread and loading screen
 
-            if(led3_textView.getText() == "LED 3: OFF") {
+            if (led3_textView.getText() == "LED 3: OFF") {
 
                 led3Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
                 led3_textView.setText("LED 3: ON");
-            }
-            else{
+            } else {
                 led3Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
                 led3_textView.setText("LED 3: OFF");
             }
@@ -152,12 +148,11 @@ public class SwitchesFragment extends Fragment {
             //TODO send request to server
             //TODO thread and loading screen
 
-            if(led4_textView.getText() == "LED 4: OFF") {
+            if (led4_textView.getText() == "LED 4: OFF") {
 
                 led4Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
                 led4_textView.setText("LED 4: ON");
-            }
-            else{
+            } else {
                 led4Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
                 led4_textView.setText("LED 4: OFF");
             }
@@ -169,12 +164,11 @@ public class SwitchesFragment extends Fragment {
             //TODO send request to server
             //TODO thread and loading screen
 
-            if(switch1_textView.getText() == "Kontakt 1: OFF") {
+            if (switch1_textView.getText() == "Kontakt 1: OFF") {
 
                 switch1Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
                 switch1_textView.setText("Kontakt 1: ON");
-            }
-            else{
+            } else {
                 switch1Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
                 switch1_textView.setText("Kontakt 1: OFF");
             }
@@ -186,12 +180,11 @@ public class SwitchesFragment extends Fragment {
             //TODO send request to server
             //TODO thread and loading screen
 
-            if(switch2_textView.getText() == "Kontakt 2: OFF") {
+            if (switch2_textView.getText() == "Kontakt 2: OFF") {
 
                 switch2Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
                 switch2_textView.setText("Kontakt 2: ON");
-            }
-            else{
+            } else {
                 switch2Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
                 switch2_textView.setText("Kontakt 2: OFF");
             }
@@ -203,19 +196,18 @@ public class SwitchesFragment extends Fragment {
             //TODO send request to server
             //TODO thread and loading screen
 
-            if(switch3_textView.getText() == "Kontakt 3: OFF") {
+            if (switch3_textView.getText() == "Kontakt 3: OFF") {
 
                 switch3Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
                 switch3_textView.setText("Kontakt 3: ON");
-            }
-            else{
+            } else {
                 switch3Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
                 switch3_textView.setText("Kontakt 3: OFF");
             }
         }
     };
 
-    private Button.OnClickListener ColorPickerButtonOnClickListener = new Button.OnClickListener(){
+    private Button.OnClickListener ColorPickerButtonOnClickListener = new Button.OnClickListener() {
 
         @Override
         public void onClick(View v) {
@@ -232,7 +224,7 @@ public class SwitchesFragment extends Fragment {
         }
     };
 
-    private void setRBGbuttonColor(int color){
+    private void setRBGbuttonColor(int color) {
 
         rgbledLayout.setBackgroundColor(color);
 
@@ -242,7 +234,7 @@ public class SwitchesFragment extends Fragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((MainActivity) activity).onSectionAttached(1);
+        ((ActivityMain) activity).onSectionAttached(1);
     }
     */
 }

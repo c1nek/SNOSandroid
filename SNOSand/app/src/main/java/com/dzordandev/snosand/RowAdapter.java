@@ -32,21 +32,18 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
         View row = convertView;
         RowBeanHolder holder = null;
 
-        if(row == null)
-        {
+        if (row == null) {
             LayoutInflater inflater = LayoutInflater.from(context);
             row = inflater.inflate(layoutID, parent, false);
 
             holder = new RowBeanHolder();
-            holder.txt_ID = (TextView)row.findViewById(R.id.Row_ID);
-            holder.txt_date = (TextView)row.findViewById(R.id.row_Date);
-            holder.txt_icon = (ImageView)row.findViewById(R.id.row_icon);
+            holder.txt_ID = (TextView) row.findViewById(R.id.Row_ID);
+            holder.txt_date = (TextView) row.findViewById(R.id.row_Date);
+            holder.txt_icon = (ImageView) row.findViewById(R.id.row_icon);
 
             row.setTag(holder);
-        }
-        else
-        {
-            holder = (RowBeanHolder)row.getTag();
+        } else {
+            holder = (RowBeanHolder) row.getTag();
         }
 
         RowBean object = data[position];
@@ -58,7 +55,7 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
         holder.txt_ID.setText(String.valueOf(object.id));
         holder.txt_date.setText(formattedDate);
 
-        switch(object.type) {
+        switch (object.type) {
             case 0:
                 holder.txt_icon.setImageResource(R.mipmap.flood_alert);
                 break;
@@ -82,8 +79,7 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
         return row;
     }
 
-    static class RowBeanHolder
-    {
+    static class RowBeanHolder {
         TextView txt_ID;
         TextView txt_date;
         ImageView txt_icon;

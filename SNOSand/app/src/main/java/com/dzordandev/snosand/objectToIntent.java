@@ -23,6 +23,4 @@ public class objectToIntent implements Serializable {
     }
 
 
-
-
 }

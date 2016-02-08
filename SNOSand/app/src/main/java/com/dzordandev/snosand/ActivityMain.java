@@ -27,13 +27,13 @@ import com.google.android.gms.common.GoogleApiAvailability;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends ActionBarActivity
+public class ActivityMain extends ActionBarActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
 
     //////////////gcm////////////////////
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String TAG = "MainActivity";
+    private static final String TAG = "ActivityMain";
 
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private ProgressBar mRegistrationProgressBar;
@@ -61,19 +61,19 @@ public class MainActivity extends ActionBarActivity
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-               // mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
+                // mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
                 SharedPreferences sharedPreferences =
                         PreferenceManager.getDefaultSharedPreferences(context);
                 boolean sentToken = sharedPreferences
                         .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
                 if (sentToken) {
-                   // mInformationTextView.setText(getString(R.string.gcm_send_message));
+                    // mInformationTextView.setText(getString(R.string.gcm_send_message));
                 } else {
-                   // mInformationTextView.setText(getString(R.string.token_error_message));
+                    // mInformationTextView.setText(getString(R.string.token_error_message));
                 }
             }
         };
-       // mInformationTextView = (TextView) findViewById(R.id.informationTextView);
+        // mInformationTextView = (TextView) findViewById(R.id.informationTextView);
 
         if (checkPlayServices()) {
             // Start IntentService to register this application with GCM.
@@ -95,22 +95,22 @@ public class MainActivity extends ActionBarActivity
 
 
 //        toIntent = new objectToIntent((objectToIntent)i.getSerializableExtra("carClass"));
-  //      carInfo = toIntent.carInfo;
-  //      listaTankowan = toIntent.listaTankowan;
+        //      carInfo = toIntent.carInfo;
+        //      listaTankowan = toIntent.listaTankowan;
 
 
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         navigationView.addHeaderView(header);
- //       login_TextView = (TextView) header.findViewById(R.id.loginTextView);
- //       car_TextView = (TextView) header.findViewById(R.id.carTextView);
+        //       login_TextView = (TextView) header.findViewById(R.id.loginTextView);
+        //       car_TextView = (TextView) header.findViewById(R.id.carTextView);
 
 
 //        login_TextView.setText(carInfo.getUser());
- //       car_TextView.setText(carInfo.getProducent()+" " + carInfo.getModel());
+        //       car_TextView.setText(carInfo.getProducent()+" " + carInfo.getModel());
 
-        fragmentManager= getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .replace(R.id.cointainer, DataFragment.newInstance())
+                .replace(R.id.cointainer, FragmentData.newInstance())
                 .commit();
     }
 
@@ -129,43 +129,40 @@ public class MainActivity extends ActionBarActivity
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
 
-        fragmentManager= getSupportFragmentManager();
+        fragmentManager = getSupportFragmentManager();
 
 
         Class fragmentClass;
-        switch(item.getItemId()) {
+        switch (item.getItemId()) {
             case R.id.nav_data:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.cointainer, DataFragment.newInstance())
+                        .replace(R.id.cointainer, FragmentData.newInstance())
                         .commit();
                 break;
             case R.id.nav_switches:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.cointainer, SwitchesFragment.newInstance())
+                        .replace(R.id.cointainer, FragmentSwitches.newInstance())
                         .commit();
                 break;
             case R.id.nav_charts:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.cointainer, CharFragment.newInstance())
+                        .replace(R.id.cointainer, FragmentChar.newInstance())
                         .commit();
                 break;
             case R.id.nav_alarms:
                 fragmentManager.beginTransaction()
-                        .replace(R.id.cointainer, AlarmsFragment.newInstance())
+                        .replace(R.id.cointainer, FragmentAlarms.newInstance())
                         .commit();
                 break;
 
             case R.id.nav_logout:
-                Intent myIntent = new Intent(MainActivity.this, LoginActivity.class);
+                Intent myIntent = new Intent(ActivityMain.this, ActivityLogin.class);
                 myIntent.putExtra("carClass", 0); //Optional parameters
-                MainActivity.this.startActivity(myIntent);
+                ActivityMain.this.startActivity(myIntent);
                 break;
             default:
-                fragmentClass = DataFragment.class;
+                fragmentClass = FragmentData.class;
         }
-
-
-
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -194,7 +191,6 @@ public class MainActivity extends ActionBarActivity
         LocalBroadcastManager.getInstance(this).unregisterReceiver(mRegistrationBroadcastReceiver);
         super.onPause();
     }
-
 
 
     /**
