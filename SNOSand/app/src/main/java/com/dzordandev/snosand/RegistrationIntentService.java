@@ -17,6 +17,7 @@ package com.dzordandev.snosand;
  */
 
 import android.app.IntentService;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
@@ -27,12 +28,25 @@ import com.google.android.gms.gcm.GcmPubSub;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.android.gms.iid.InstanceID;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class RegistrationIntentService extends IntentService {
 
     private static final String TAG = "RegIntentService";
     private static final String[] TOPICS = {"global"};
+    private SharedPreferences loginPreferences;
+
+
 
     public RegistrationIntentService() {
         super(TAG);
@@ -80,11 +94,47 @@ public class RegistrationIntentService extends IntentService {
      *
      * Modify this method to associate the user's GCM registration token with any server-side account
      * maintained by your application.
-     *
-     * @param token The new token.
      */
-    private void sendRegistrationToServer(String token) {
-        // TODO: Implement this method to send any registration to your app's servers.
+    private void sendRegistrationToServer(String gcmToken) {
+
+        String serverToken = null;
+        String SERVERIP = null;
+
+        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+
+        serverToken = loginPreferences.getString("serverToken", "");
+        SERVERIP = loginPreferences.getString("serverIP", "");
+
+        String qString = SERVERIP + "gcm?androidToken=" + serverToken + "&gcmToken=" + gcmToken;
+
+        //String qString = "http://83.21.111.47:2137/gcm?androidToken="+ serverToken +"&gcmToken="+ gcmToken;
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(qString);
+        try {
+            HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
+
+            if (httpEntity != null) {
+                InputStream inputStream = httpEntity.getContent();
+                Reader in = new InputStreamReader(inputStream);
+                BufferedReader bufferedreader = new BufferedReader(in);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                String stringReadLine = null;
+
+                while ((stringReadLine = bufferedreader.readLine()) != null) {
+                    stringBuilder.append(stringReadLine + "\n");
+                }
+            }
+
+        } catch (ClientProtocolException e) {
+
+            e.printStackTrace();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        Log.i("HTTP GMCToken", "GMC Token send to server " + qString);
     }
 
     /**
@@ -100,6 +150,8 @@ public class RegistrationIntentService extends IntentService {
             pubSub.subscribe(token, "/topics/" + topic, null);
         }
     }
+
+
     // [END subscribe_topics]
 
 }

@@ -1,15 +1,5 @@
 package com.dzordandev.snosand;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,39 +7,33 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.StrictMode;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.CheckBox;
+import android.widget.ImageView;
+import android.widget.PopupWindow;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.MalformedURLException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-
-import android.util.Log;
-
-import android.widget.PopupWindow;
-import android.widget.Toast;
 
 /**
  * Created by dzordanDev on 2016.
@@ -57,7 +41,7 @@ import android.widget.Toast;
 public class ActivityLogin extends ActionBarActivity {
 
 
-    private static String SERVERIP = "http://192.168.43.18:8080/";
+    private static String SERVERIP = "http://83.21.111.47:2137/";
 
     ImageView logoImage;
     TextView login_TextView, password_TextView;
@@ -70,57 +54,13 @@ public class ActivityLogin extends ActionBarActivity {
     String getFuelString = "/refueling?token=";
     String login, pass;
     carDetails car_details;
-
+    List<RowBean> listaTankowan = new ArrayList<RowBean>();
+    objectToIntent toIntent;
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
-
-
-    List<RowBean> listaTankowan = new ArrayList<RowBean>();
-
-    objectToIntent toIntent;
-
-
     private Handler handler;
     private ProgressDialog dialog;
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_activity);
-        getSupportActionBar().hide();
-
-        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
-        StrictMode.setThreadPolicy(policy);
-
-        logoImage = (ImageView) findViewById(R.id.imagelogo);
-        login_TextView = (TextView) findViewById(R.id.editText_login);
-        password_TextView = (TextView) findViewById(R.id.editText_password);
-        rememberMe = (CheckBox) findViewById(R.id.checkBox);
-
-        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        loginPrefsEditor = loginPreferences.edit();
-
-        saveLogin = loginPreferences.getBoolean("saveLogin", false);
-        if (saveLogin == true) {
-            login_TextView.setText(loginPreferences.getString("login", ""));
-            password_TextView.setText(loginPreferences.getString("password", ""));
-            rememberMe.setChecked(true);
-        }
-
-
-        login_Button = (Button) findViewById(R.id.button_login);
-
-        login_Button.setOnClickListener(loginButtonOnClickListener);
-
-        dialog = new ProgressDialog(this);
-        dialog.setMessage("Proszę czekać.");
-        dialog.setCancelable(false);
-        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
-
-    }
-
     private Button.OnClickListener loginButtonOnClickListener = new Button.OnClickListener() {
         public void onClick(View arg0) {
             dialog.show();
@@ -150,20 +90,23 @@ public class ActivityLogin extends ActionBarActivity {
                     }
 
 
-                    //TODO shared preferencef with ip, login, device, token
+                    //TODO shared preferencef with device, token
                     //TODO add deviceID to SP
-                    //token = QueryServer(login, pass);
+                    token = QueryServer(login, pass);
 
-                    /*
-                    if(token.length() <25){
+
+                    if (token.length() < 25) {
                         Toast.makeText(ActivityLogin.this, "Niepoprawne dane logowania. Sprobój jeszcze raz.", Toast.LENGTH_SHORT).show();
-                    }
-                    else {
+                    } else {
                         token = token.replace("\n", "").replace("\r", "");
+
+                        loginPrefsEditor.putString("serverToken", token);
+                        loginPrefsEditor.commit();
+
                         Log.i("token", token);
 
-                        loginPrefsEditor.putString("token", token);
 
+                        /*
                         String json_string = QueryServer(token);
                         Log.i("json_string", json_string);
 
@@ -175,7 +118,7 @@ public class ActivityLogin extends ActionBarActivity {
                         ParseJSONFuel(fuel_json_string);
                         */
 
-
+                    }
                     handler.sendEmptyMessage(0);
 
 
@@ -213,9 +156,9 @@ public class ActivityLogin extends ActionBarActivity {
 
             String Result = null;
 
-            String qString = SERVERIP + loginString + "login=" + login + "&password=" + pass;
+            //String qString = SERVERIP + loginString + "login=" + login + "&password=" + pass;
 
-            //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
+            String qString = "http://83.21.111.47:2137/androidLogin?login=gumball300@gmail.com&password=test";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(qString);
@@ -382,6 +325,43 @@ public class ActivityLogin extends ActionBarActivity {
 
 
     };
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.login_activity);
+        getSupportActionBar().hide();
+
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
+        logoImage = (ImageView) findViewById(R.id.imagelogo);
+        login_TextView = (TextView) findViewById(R.id.editText_login);
+        password_TextView = (TextView) findViewById(R.id.editText_password);
+        rememberMe = (CheckBox) findViewById(R.id.checkBox);
+
+        loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
+        loginPrefsEditor = loginPreferences.edit();
+
+        saveLogin = loginPreferences.getBoolean("saveLogin", false);
+        if (saveLogin == true) {
+            login_TextView.setText(loginPreferences.getString("login", ""));
+            password_TextView.setText(loginPreferences.getString("password", ""));
+            rememberMe.setChecked(true);
+        }
+
+
+        login_Button = (Button) findViewById(R.id.button_login);
+
+        login_Button.setOnClickListener(loginButtonOnClickListener);
+
+        dialog = new ProgressDialog(this);
+        dialog.setMessage("Proszę czekać.");
+        dialog.setCancelable(false);
+        dialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+
+
+    }
 }
 
 
