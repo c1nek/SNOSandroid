@@ -23,8 +23,6 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -41,7 +39,7 @@ import java.util.List;
 public class ActivityLogin extends ActionBarActivity {
 
 
-    private static String SERVERIP = "http://83.21.111.47:2137/";
+    private static String SERVERIP = "http://83.11.123.20:2137/";
 
     ImageView logoImage;
     TextView login_TextView, password_TextView;
@@ -53,9 +51,8 @@ public class ActivityLogin extends ActionBarActivity {
     String getInfoString = "/carinfo?";
     String getFuelString = "/refueling?token=";
     String login, pass;
-    carDetails car_details;
     List<RowBean> listaTankowan = new ArrayList<RowBean>();
-    objectToIntent toIntent;
+
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
     private Boolean saveLogin;
@@ -126,10 +123,10 @@ public class ActivityLogin extends ActionBarActivity {
 
                         public void run() {
 
-                            toIntent = new objectToIntent(listaTankowan, car_details);
+                            //toIntent = new objectToIntent(listaTankowan, car_details);
 
                             Intent myIntent = new Intent(ActivityLogin.this, ActivityMain.class);
-                            myIntent.putExtra("carClass", toIntent); //Optional parameters
+                            myIntent.putExtra("carClass", 1); //Optional parameters
                             ActivityLogin.this.startActivity(myIntent);
 
                         }
@@ -156,9 +153,9 @@ public class ActivityLogin extends ActionBarActivity {
 
             String Result = null;
 
-            //String qString = SERVERIP + loginString + "login=" + login + "&password=" + pass;
+            String qString = SERVERIP + "androidLogin?login=" + login + "&password=" + pass;
 
-            String qString = "http://83.21.111.47:2137/androidLogin?login=gumball300@gmail.com&password=test";
+            //String qString = "http://83.21.111.47:2137/androidLogin?login=gumball300@gmail.com&password=test";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpGet httpGet = new HttpGet(qString);
@@ -265,31 +262,6 @@ public class ActivityLogin extends ActionBarActivity {
             return Result;
         }
 
-        private carDetails ParseJSON(String json) {
-
-            String _producent = "";
-            String _model = "";
-            int _fuel = 0;
-            int _mileage = 0;
-            int _motor = 0;
-
-            try {
-                JSONObject JsonObject = new JSONObject(json);
-
-                _producent = JsonObject.getString("mark");
-                _model = JsonObject.getString("model");
-                _fuel = JsonObject.getInt("fuel");
-                _mileage = JsonObject.getInt("mileage");
-                _motor = JsonObject.getInt("engineCapacity");
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            carDetails car__details = new carDetails(_producent, _model, _fuel, _mileage, _motor);
-
-            return car__details;
-        }
 
         /*
         private void ParseJSONFuel(String json) {
@@ -339,7 +311,6 @@ public class ActivityLogin extends ActionBarActivity {
         login_TextView = (TextView) findViewById(R.id.editText_login);
         password_TextView = (TextView) findViewById(R.id.editText_password);
         rememberMe = (CheckBox) findViewById(R.id.checkBox);
-
         loginPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
         loginPrefsEditor = loginPreferences.edit();
 

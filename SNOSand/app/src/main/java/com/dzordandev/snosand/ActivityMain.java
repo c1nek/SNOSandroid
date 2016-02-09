@@ -34,14 +34,10 @@ public class ActivityMain extends ActionBarActivity
     //////////////gcm////////////////////
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "ActivityMain";
-
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private ProgressBar mRegistrationProgressBar;
     private TextView mInformationTextView;
-
     //////////////gcm////////////////////
-
-    carDetails carInfo;
 
     TextView login_TextView, car_TextView;
 
@@ -49,7 +45,7 @@ public class ActivityMain extends ActionBarActivity
 
     List<RowBean> listaTankowan = new ArrayList<RowBean>();
 
-    objectToIntent toIntent;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,13 +166,6 @@ public class ActivityMain extends ActionBarActivity
         return true;
     }
 
-    public carDetails getCarDetails() {
-        return carInfo;
-    }
-
-    public objectToIntent getTankowania() {
-        return toIntent;
-    }
 
     ////////////////gcm//////////////////
     @Override
