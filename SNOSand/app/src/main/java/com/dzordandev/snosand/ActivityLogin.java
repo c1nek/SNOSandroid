@@ -39,7 +39,7 @@ import java.util.List;
 public class ActivityLogin extends ActionBarActivity {
 
 
-    private static String SERVERIP = "http://83.11.123.20:2137/";
+    private static String SERVERIP = "http://83.20.161.116:2137/";
 
     ImageView logoImage;
     TextView login_TextView, password_TextView;
@@ -87,7 +87,7 @@ public class ActivityLogin extends ActionBarActivity {
                     }
 
 
-                    //TODO shared preferencef with device, token
+                    //TODO shared preferencef with device
                     //TODO add deviceID to SP
                     token = QueryServer(login, pass);
 

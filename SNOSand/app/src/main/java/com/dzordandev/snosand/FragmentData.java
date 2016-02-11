@@ -1,6 +1,7 @@
 package com.dzordandev.snosand;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,23 +40,25 @@ public class FragmentData extends Fragment {
     View myInflatedView;
     private SharedPreferences loginPreferences;
     private CurrentValues currentValues;
-
+    private ProgressDialog dialog;
 
     public Runnable loadThings = new Runnable() {
 
-
         public void run() {
-            currentValues = ParseJSON(QueryServer(loginPreferences.getString("serverToken", ""), loginPreferences.getString("serverIP", "")));
-            getActivity().runOnUiThread(new Runnable() {
-                public void run() {
-                    setFields(currentValues);
-                }
-            });
+            try {
+                currentValues = ParseJSON(QueryServer(loginPreferences.getString("serverToken", ""), loginPreferences.getString("serverIP", "")));
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        setFields(currentValues);
+
+                    }
+                });
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
 
         }
     };
-
-
 
     public FragmentData() {
     }
@@ -70,19 +73,34 @@ public class FragmentData extends Fragment {
 
         myInflatedView = inflater.inflate(R.layout.data_layout, container, false);
 
-        loginPreferences = this.getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
-        new Thread(loadThings).start();
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Pobieranie danych.");
+        dialog.setCancelable(false);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.show();
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 1000);
+
+
+        loginPreferences = this.getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
         userText = (TextView) myInflatedView.findViewById(R.id.textView_user);
         userText.setText("Użytkownik: \n" + loginPreferences.getString("login", null));
+
+        new Thread(loadThings).start();
 
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
                 new Thread(loadThings).start();
             }
-        }, 0,30000);//put here time 1000 milliseconds=1 second
+        }, 0, 60000);
 
         return myInflatedView;
     }
@@ -133,7 +151,7 @@ public class FragmentData extends Fragment {
         int tempInside;
         int humOutside;
         int tempOutside;
-        double pressure;
+        int pressure;
 
         try {
             JSONObject JsonObject = new JSONObject(json);
@@ -145,7 +163,7 @@ public class FragmentData extends Fragment {
             currentVal.setHumInside(humOutside);
             tempOutside = JsonObject.getInt("tempOutside");
             currentVal.setTempOutside(tempOutside);
-            pressure = JsonObject.getDouble("pressure");
+            pressure = JsonObject.getInt("pressure");
             currentVal.setPressure(pressure);
 
         } catch (JSONException e) {
@@ -166,11 +184,10 @@ public class FragmentData extends Fragment {
         tempInText.setText(Integer.toString(values.tempInside) + "\u00b0C");
         humInText.setText(Integer.toString(values.humInside) + "%");
         tempOutText.setText(Integer.toString(values.tempOutside) + "\u00b0C");
-        pressText.setText(Double.toString(values.pressure) + "hPa");
+        pressText.setText(Integer.toString(values.pressure) + "hPa");
         //deviceIDText.setText("Urządzenie:\n" + values.getDeviceID());
 
     }
-
 
     @Override
     public void onAttach(Activity myActivity) {

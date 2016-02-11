@@ -1,6 +1,8 @@
 package com.dzordandev.snosand;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,7 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by marci on 26.01.2016.
@@ -16,12 +20,11 @@ import java.util.Date;
 public class FragmentAlarms extends Fragment {
 
     private ListView listView1;
-    private ArrayAdapter<String> adapter;
 
     public ActivityMain mineActivity;
+    private ProgressDialog dialog;
 
-    //objectToIntent tankowania;
-    //List<RowBean> listaTankowan = new ArrayList<RowBean>();
+    List<RowBean> alarmLists = new ArrayList<RowBean>();
 
 
     public static FragmentAlarms newInstance() {
@@ -38,12 +41,19 @@ public class FragmentAlarms extends Fragment {
 
         View myInflatedView = inflater.inflate(R.layout.alarm_layout, container, false);
 
+        dialog = new ProgressDialog(getActivity());
+        dialog.setMessage("Pobieranie danych.");
+        dialog.setCancelable(false);
+        dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+        dialog.show();
 
-        //tankowania = new objectToIntent(mineActivity.getTankowania());
-        //listaTankowan = tankowania.listaTankowan;
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                dialog.dismiss();
+            }
+        }, 1000);
 
-
-        //SimpleDateFormat ft = new SimpleDateFormat ("yyyy-MM-dd");
 
 
         RowBean[] RowBean_data = new RowBean[]{

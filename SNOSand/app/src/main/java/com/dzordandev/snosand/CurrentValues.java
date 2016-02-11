@@ -11,7 +11,7 @@ public class CurrentValues implements Serializable {
     int tempInside;
     int humInside;
     int tempOutside;
-    double pressure;
+    int pressure;
 
     public String getDeviceID() {
         return deviceID;
@@ -45,11 +45,11 @@ public class CurrentValues implements Serializable {
         this.tempOutside = tempOutside;
     }
 
-    public double getPressure() {
+    public int getPressure() {
         return pressure;
     }
 
-    public void setPressure(double pressure) {
+    public void setPressure(int pressure) {
         this.pressure = pressure;
     }
 

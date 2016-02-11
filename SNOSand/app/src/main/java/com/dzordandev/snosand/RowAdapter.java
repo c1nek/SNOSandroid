@@ -73,6 +73,8 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
                 break;
             default:
                 break;
+
+            //TODO brak ruchu!!!!!!!!!!!
         }
 
 

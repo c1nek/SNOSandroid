@@ -43,7 +43,7 @@ public class ActivityMain extends ActionBarActivity
 
     FragmentManager fragmentManager;
 
-    List<RowBean> listaTankowan = new ArrayList<RowBean>();
+
 
 
 
