@@ -98,7 +98,9 @@ public class FragmentData extends Fragment {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                new Thread(loadThings).start();
+                if(FragmentData.this.isVisible()) {
+                    new Thread(loadThings).start();
+                }
             }
         }, 0, 60000);
 

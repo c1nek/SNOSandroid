@@ -39,7 +39,7 @@ import java.util.List;
 public class ActivityLogin extends ActionBarActivity {
 
 
-    private static String SERVERIP = "http://83.20.161.116:2137/";
+    private static String SERVERIP = "http://83.11.55.97:2137/";
 
     ImageView logoImage;
     TextView login_TextView, password_TextView;
@@ -174,6 +174,10 @@ public class ActivityLogin extends ActionBarActivity {
                         stringBuilder.append(stringReadLine + "\n");
                     }
                     Result = stringBuilder.toString();
+                }
+                else{
+                    Toast.makeText(ActivityLogin.this, "Brak połączenia z serwerem.", Toast.LENGTH_SHORT).show();
+                    return null;
                 }
 
             } catch (ClientProtocolException e) {

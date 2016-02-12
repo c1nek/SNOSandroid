@@ -50,7 +50,7 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
 
         Date date = null;
 
-        String formattedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss").format(object.dateDate);
+        String formattedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm").format(object.dateDate);
 
         holder.txt_ID.setText(String.valueOf(object.id));
         holder.txt_date.setText(formattedDate);
@@ -69,6 +69,9 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
                 holder.txt_icon.setImageResource(R.mipmap.hot_alert);
                 break;
             case 4:
+                holder.txt_icon.setImageResource(R.mipmap.cold_alert);
+                break;
+            case 5:
                 holder.txt_icon.setImageResource(R.mipmap.cold_alert);
                 break;
             default:

@@ -205,7 +205,7 @@ public class FragmentSwitches extends Fragment {
             public void run() {
                 dialog.dismiss();
             }
-        }, 1500);
+        }, 1750);
 
         loginPreferences = this.getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
