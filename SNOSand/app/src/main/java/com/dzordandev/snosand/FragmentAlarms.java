@@ -187,7 +187,6 @@ public class FragmentAlarms extends Fragment {
 
     private void setFields(List<RowBean> alarmList){
 
-        Collections.reverse(alarmList);
         RowBean[] RowBean_data = alarmList.toArray(new RowBean[alarmList.size()]);
 
         RowAdapter adapter = new RowAdapter(getActivity().getApplicationContext(), R.layout.row, RowBean_data);

@@ -1,6 +1,19 @@
 <resources>
     <string name="app_name">snOS</string>
 
+    <string-array name="dataTypes_arrays">
+        <item>Temperatura wewnątrz</item>
+        <item>Temperatura zewnątrz</item>
+        <item>Wilgotność wewnątrz</item>
+        <item>Ciśnienie</item>
+    </string-array>
+
+    <string-array name="dataValues_arrays">
+        <item>24 godziny</item>
+        <item>Tydzień</item>
+        <item>Miesiąc</item>
+    </string-array>
+
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 

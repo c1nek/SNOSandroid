@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.pes.androidmaterialcolorpickerdialog.ColorPicker;
 
@@ -205,7 +206,7 @@ public class FragmentSwitches extends Fragment {
             public void run() {
                 dialog.dismiss();
             }
-        }, 1750);
+        }, 2000);
 
         loginPreferences = this.getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
@@ -344,6 +345,7 @@ public class FragmentSwitches extends Fragment {
 
     private void setFields(CurrentSwitches values) {
 
+        if(values != null){
         if (values.isLed1()) {
             led1Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
             led1_textView.setText("LED 1: ON");
@@ -395,14 +397,19 @@ public class FragmentSwitches extends Fragment {
         }
 
 
-        selectedColorR = Integer.parseInt(values.ledRGB.substring(0, 3));
-        selectedColorG = Integer.parseInt(values.ledRGB.substring(3, 6));
-        selectedColorB = Integer.parseInt(values.ledRGB.substring(6, 9));
+            selectedColorR = Integer.parseInt(values.ledRGB.substring(0, 3));
+            selectedColorG = Integer.parseInt(values.ledRGB.substring(3, 6));
+            selectedColorB = Integer.parseInt(values.ledRGB.substring(6, 9));
 
-        int rgbColor = new Color().rgb(selectedColorR, selectedColorG, selectedColorB);
-        setRBGbuttonColor(rgbColor);
+            int rgbColor = new Color().rgb(selectedColorR, selectedColorG, selectedColorB);
+            setRBGbuttonColor(rgbColor);
 
-        cp = new ColorPicker(getActivity(), selectedColorR, selectedColorG, selectedColorB);
+            cp = new ColorPicker(getActivity(), selectedColorR, selectedColorG, selectedColorB);
+        }
+        else{
+            Toast.makeText(getActivity(), "Bład komunikacji z serwerem", Toast.LENGTH_SHORT);
+        }
+
     }
 
     private void setRBGbuttonColor(int color) {

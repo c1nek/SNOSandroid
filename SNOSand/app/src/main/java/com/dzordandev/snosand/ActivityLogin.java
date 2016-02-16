@@ -23,6 +23,8 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -39,7 +41,7 @@ import java.util.List;
 public class ActivityLogin extends ActionBarActivity {
 
 
-    private static String SERVERIP = "http://83.11.55.97:2137/";
+    private static String SERVERIP = "http://snos.ddns.net:2137/";
 
     ImageView logoImage;
     TextView login_TextView, password_TextView;
@@ -91,46 +93,42 @@ public class ActivityLogin extends ActionBarActivity {
                     //TODO add deviceID to SP
                     token = QueryServer(login, pass);
 
-
-                    if (token.length() < 25) {
-                        Toast.makeText(ActivityLogin.this, "Niepoprawne dane logowania. Sprobój jeszcze raz.", Toast.LENGTH_SHORT).show();
-                    } else {
-                        token = token.replace("\n", "").replace("\r", "");
-
-                        loginPrefsEditor.putString("serverToken", token);
-                        loginPrefsEditor.commit();
-
-                        Log.i("token", token);
+                    if (token != null) {
 
 
-                        /*
-                        String json_string = QueryServer(token);
-                        Log.i("json_string", json_string);
+                        if (token.length() < 25) {
+                            runOnUiThread(new Runnable() {
+                                public void run() {
+                                    Toast.makeText(ActivityLogin.this, "Niepoprawne dane logowania. Sprobój jeszcze raz.", Toast.LENGTH_SHORT).show();
+                                }
+                            });
+                        } else {
+                            token = token.replace("\n", "").replace("\r", "");
 
-                        car_details = ParseJSON(json_string);
-                        car_details.setUser(login);
+                            loginPrefsEditor.putString("serverToken", token);
+                            loginPrefsEditor.commit();
 
-                        String fuel_json_string = QueryServer(token, 1);
-                        Log.i("fuel_json_string", fuel_json_string);
-                        ParseJSONFuel(fuel_json_string);
-                        */
+                            Log.i("token", token);
+                            runOnUiThread(new Runnable() {
 
-                    }
-                    handler.sendEmptyMessage(0);
+                                public void run() {
 
+                                    //toIntent = new objectToIntent(listaTankowan, car_details);
 
-                    runOnUiThread(new Runnable() {
+                                    Intent myIntent = new Intent(ActivityLogin.this, ActivityMain.class);
+                                    myIntent.putExtra("carClass", 1); //Optional parameters
+                                    ActivityLogin.this.startActivity(myIntent);
 
-                        public void run() {
+                                }
+                            });
 
-                            //toIntent = new objectToIntent(listaTankowan, car_details);
-
-                            Intent myIntent = new Intent(ActivityLogin.this, ActivityMain.class);
-                            myIntent.putExtra("carClass", 1); //Optional parameters
-                            ActivityLogin.this.startActivity(myIntent);
 
                         }
-                    });
+                        handler.sendEmptyMessage(0);
+
+
+
+                    }
 
 
                 }
@@ -158,6 +156,9 @@ public class ActivityLogin extends ActionBarActivity {
             //String qString = "http://83.21.111.47:2137/androidLogin?login=gumball300@gmail.com&password=test";
 
             HttpClient httpClient = new DefaultHttpClient();
+            HttpParams params = httpClient.getParams();
+            HttpConnectionParams.setConnectionTimeout(params, 3000);
+            HttpConnectionParams.setSoTimeout(params, 3000);
             HttpGet httpGet = new HttpGet(qString);
             try {
                 HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
@@ -174,8 +175,7 @@ public class ActivityLogin extends ActionBarActivity {
                         stringBuilder.append(stringReadLine + "\n");
                     }
                     Result = stringBuilder.toString();
-                }
-                else{
+                } else {
                     Toast.makeText(ActivityLogin.this, "Brak połączenia z serwerem.", Toast.LENGTH_SHORT).show();
                     return null;
                 }
