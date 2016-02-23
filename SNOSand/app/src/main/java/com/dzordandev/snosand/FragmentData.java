@@ -29,9 +29,6 @@ import java.io.Reader;
 import java.util.Timer;
 import java.util.TimerTask;
 
-/**
- * Created by marci on 26.01.2016.
- */
 public class FragmentData extends Fragment {
 
 
@@ -40,8 +37,6 @@ public class FragmentData extends Fragment {
     View myInflatedView;
     private SharedPreferences loginPreferences;
     private CurrentValues currentValues;
-    private ProgressDialog dialog;
-
     public Runnable loadThings = new Runnable() {
 
         public void run() {
@@ -59,6 +54,7 @@ public class FragmentData extends Fragment {
 
         }
     };
+    private ProgressDialog dialog;
 
     public FragmentData() {
     }
@@ -98,7 +94,7 @@ public class FragmentData extends Fragment {
         new Timer().scheduleAtFixedRate(new TimerTask() {
             @Override
             public void run() {
-                if(FragmentData.this.isVisible()) {
+                if (FragmentData.this.isVisible()) {
                     new Thread(loadThings).start();
                 }
             }
@@ -114,8 +110,6 @@ public class FragmentData extends Fragment {
         String qString = SERVERIP + "currentSensorsValues?androidToken=" + token;
 
         Log.i("dataHTTP", qString);
-
-        //String qString = "http://83.21.111.47:2137/androidLogin?login=gumball300@gmail.com&password=test";
 
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(qString);
@@ -157,8 +151,6 @@ public class FragmentData extends Fragment {
 
         try {
             JSONObject JsonObject = new JSONObject(json);
-            //deviceID = JsonObject.getString("deviceId");
-            //currentVal.setDeviceID(deviceID);
             tempInside = JsonObject.getInt("tempInside");
             currentVal.setTempInside(tempInside);
             humOutside = JsonObject.getInt("humInside");
@@ -187,7 +179,6 @@ public class FragmentData extends Fragment {
         humInText.setText(Integer.toString(values.humInside) + "%");
         tempOutText.setText(Integer.toString(values.tempOutside) + "\u00b0C");
         pressText.setText(Integer.toString(values.pressure) + "hPa");
-        //deviceIDText.setText("Urządzenie:\n" + values.getDeviceID());
 
     }
 

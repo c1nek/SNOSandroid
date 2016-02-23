@@ -1,8 +1,5 @@
 package com.dzordandev.snosand;
 
-/**
- * Created by marci on 09.02.2016.
- */
 public class CurrentSwitches {
 
     public boolean led1;

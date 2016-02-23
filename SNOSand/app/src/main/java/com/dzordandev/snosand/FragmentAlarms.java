@@ -34,9 +34,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by marci on 26.01.2016.
- */
 public class FragmentAlarms extends Fragment {
 
     private ListView listView1;
@@ -96,32 +93,6 @@ public class FragmentAlarms extends Fragment {
             }
         }, 1000);
 
-
-
-
-/*
-        RowBean[] RowBean_data = new RowBean[]{
-                new RowBean(7, new Date(1454885698), (byte) 0),
-                new RowBean(6, new Date(1454885698), (byte) 1),
-                new RowBean(5, new Date(1454885698), (byte) 2),
-                new RowBean(4, new Date(1454885698), (byte) 3),
-                new RowBean(3, new Date(1454885698), (byte) 4),
-                new RowBean(2, new Date(1454885698), (byte) 0),
-                new RowBean(1, new Date(1454885698), (byte) 1),
-                new RowBean(2, new Date(1454885698), (byte) 0),
-                new RowBean(1, new Date(1454885698), (byte) 1),
-                new RowBean(2, new Date(1454885698), (byte) 0),
-                new RowBean(1, new Date(1454885698), (byte) 1),
-        };
-
-
-        RowAdapter adapter = new RowAdapter(getActivity().getApplicationContext(), R.layout.row, RowBean_data);
-
-        listView1 = (ListView) myInflatedView.findViewById(R.id.listView);
-
-        listView1.setAdapter(adapter);
-
-*/
         return myInflatedView;
     }
 
@@ -174,7 +145,7 @@ public class FragmentAlarms extends Fragment {
                 JSONObject rec = jsonAlarms.getJSONObject(i);
                 type = Byte.parseByte(rec.getString("dangerType"));
                 date = new Date(rec.getLong("startTime"));
-                RowBean row = new RowBean(id, date, type);
+                RowBean row = new RowBean(jsonAlarms.length()-i, date, type);
                 alarmLists.add(row);
                 id++;
             }
@@ -196,15 +167,3 @@ public class FragmentAlarms extends Fragment {
 
     }
 }
-
-
-
-
-
-/*
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((ActivityMain) activity).onSectionAttached(1);
-    }
-    */

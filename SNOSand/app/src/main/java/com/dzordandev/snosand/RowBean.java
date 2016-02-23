@@ -15,5 +15,4 @@ public class RowBean implements Serializable {
         this.type = type;
     }
 
-
 }

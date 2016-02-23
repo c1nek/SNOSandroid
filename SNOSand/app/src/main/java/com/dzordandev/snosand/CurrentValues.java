@@ -2,9 +2,6 @@ package com.dzordandev.snosand;
 
 import java.io.Serializable;
 
-/**
- * Created by marci on 08.02.2016.
- */
 public class CurrentValues implements Serializable {
 
     String deviceID;

@@ -12,12 +12,15 @@ import org.apache.http.impl.client.DefaultHttpClient;
 
 import java.io.IOException;
 
-/**
- * Created by marci on 09.02.2016.
- */
-public class FragmentSwitchesThread extends Thread{
+public class FragmentSwitchesThread extends Thread {
 
 
+    FrameLayout layout;
+    TextView text;
+    String type;
+    boolean switchState;
+    String serverIP;
+    String token;
     public FragmentSwitchesThread(FrameLayout layout, TextView text, String type, boolean switchState, String serverIP, String token) {
         this.layout = layout;
         this.text = text;
@@ -27,25 +30,16 @@ public class FragmentSwitchesThread extends Thread{
         this.token = token;
     }
 
-    FrameLayout layout;
-    TextView text;
-    String type;
-    boolean switchState;
-    String serverIP;
-    String token;
-
-
     public void run() {
 
         int state;
-        if(switchState){
+        if (switchState) {
             state = 1;
-        }
-        else{
+        } else {
             state = 0;
         }
 
-        String qString =  serverIP + "setSwitch?androidToken=" + token + "&switch=" + type + "&value=" + state;
+        String qString = serverIP + "setSwitch?androidToken=" + token + "&switch=" + type + "&value=" + state;
 
         Log.i(type, qString);
 

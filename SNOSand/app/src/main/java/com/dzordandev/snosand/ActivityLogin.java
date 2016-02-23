@@ -31,17 +31,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
-import java.net.URLEncoder;
-import java.util.ArrayList;
-import java.util.List;
 
-/**
- * Created by dzordanDev on 2016.
- */
 public class ActivityLogin extends ActionBarActivity {
 
 
-    private static String SERVERIP = "http://snos.ddns.net:2137/";
+    private static String SERVERIP = "http://164.132.111.23:8080/";
 
     ImageView logoImage;
     TextView login_TextView, password_TextView;
@@ -49,11 +43,7 @@ public class ActivityLogin extends ActionBarActivity {
     CheckBox rememberMe;
     PopupWindow popupMessage;
     String token = "";
-    String loginString = "/androidLogin?";
-    String getInfoString = "/carinfo?";
-    String getFuelString = "/refueling?token=";
     String login, pass;
-    List<RowBean> listaTankowan = new ArrayList<RowBean>();
 
     private SharedPreferences loginPreferences;
     private SharedPreferences.Editor loginPrefsEditor;
@@ -69,7 +59,6 @@ public class ActivityLogin extends ActionBarActivity {
 
                     InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
                     imm.hideSoftInputFromWindow(login_TextView.getWindowToken(), 0);
-
 
                     login = login_TextView.getText().toString();
                     Log.i("login", login);
@@ -88,9 +77,6 @@ public class ActivityLogin extends ActionBarActivity {
                         loginPrefsEditor.commit();
                     }
 
-
-                    //TODO shared preferencef with device
-                    //TODO add deviceID to SP
                     token = QueryServer(login, pass);
 
                     if (token != null) {
@@ -113,27 +99,18 @@ public class ActivityLogin extends ActionBarActivity {
 
                                 public void run() {
 
-                                    //toIntent = new objectToIntent(listaTankowan, car_details);
-
                                     Intent myIntent = new Intent(ActivityLogin.this, ActivityMain.class);
-                                    myIntent.putExtra("carClass", 1); //Optional parameters
                                     ActivityLogin.this.startActivity(myIntent);
 
                                 }
                             });
 
-
                         }
                         handler.sendEmptyMessage(0);
-
-
-
                     }
-
 
                 }
             }.start();
-
 
             handler = new Handler() {
                 public void handleMessage(android.os.Message msg) {
@@ -143,17 +120,15 @@ public class ActivityLogin extends ActionBarActivity {
                 ;
             };
 
-
         }
 
 
         private String QueryServer(String login, String password) {
 
+
             String Result = null;
 
             String qString = SERVERIP + "androidLogin?login=" + login + "&password=" + pass;
-
-            //String qString = "http://83.21.111.47:2137/androidLogin?login=gumball300@gmail.com&password=test";
 
             HttpClient httpClient = new DefaultHttpClient();
             HttpParams params = httpClient.getParams();
@@ -189,117 +164,6 @@ public class ActivityLogin extends ActionBarActivity {
             }
             return Result;
         }
-
-        private String QueryServer(String _token) {
-            String Result = null;
-
-            String qString = SERVERIP + getInfoString + "token=" + URLEncoder.encode(_token);
-
-            //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
-
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(qString);
-
-
-            try {
-                HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
-
-                if (httpEntity != null) {
-                    InputStream inputStream = httpEntity.getContent();
-                    Reader in = new InputStreamReader(inputStream);
-                    BufferedReader bufferedreader = new BufferedReader(in);
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    String stringReadLine = null;
-
-                    while ((stringReadLine = bufferedreader.readLine()) != null) {
-                        stringBuilder.append(stringReadLine + "\n");
-                    }
-                    Result = stringBuilder.toString();
-                }
-
-            } catch (ClientProtocolException e) {
-
-                e.printStackTrace();
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            }
-            return Result;
-        }
-
-        private String QueryServer(String _token, int i) {
-            String Result = null;
-
-            String qString = SERVERIP + getFuelString + URLEncoder.encode(_token);
-
-            //String qString = "http://83.21.107.154:2137/androidLogin?login=kubarat8@wp.pl&password=test";
-
-            HttpClient httpClient = new DefaultHttpClient();
-            HttpGet httpGet = new HttpGet(qString);
-
-
-            try {
-                HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
-
-                if (httpEntity != null) {
-                    InputStream inputStream = httpEntity.getContent();
-                    Reader in = new InputStreamReader(inputStream);
-                    BufferedReader bufferedreader = new BufferedReader(in);
-                    StringBuilder stringBuilder = new StringBuilder();
-
-                    String stringReadLine = null;
-
-                    while ((stringReadLine = bufferedreader.readLine()) != null) {
-                        stringBuilder.append(stringReadLine + "\n");
-                    }
-                    Result = stringBuilder.toString();
-                }
-
-            } catch (ClientProtocolException e) {
-
-                e.printStackTrace();
-            } catch (IOException e) {
-
-                e.printStackTrace();
-            }
-            return Result;
-        }
-
-
-        /*
-        private void ParseJSONFuel(String json) {
-
-            Date _data = null;
-            float _zalitr = 0;
-            int _przebiegl = 0;
-            int _litorow = 0;
-
-            try {
-                JSONObject JsonObject = new JSONObject(json);
-                JSONArray jsonfuel = JsonObject.getJSONArray("table");
-                for (int i = 0; i < jsonfuel.length(); i++) {
-                    JSONObject rec = jsonfuel.getJSONObject(i);
-                    _litorow = rec.getInt("liter");
-                    _zalitr = rec.getLong("price");
-                    _przebiegl = rec.getInt("mileage");
-                    // _data = rec.getInt("time");
-                    RowBean rzadek = new RowBean(_litorow, _data, _przebiegl, _zalitr);
-                    listaTankowan.add(rzadek);
-
-
-                }
-
-
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-*/
-
-
     };
 
     @Override
@@ -325,7 +189,6 @@ public class ActivityLogin extends ActionBarActivity {
             rememberMe.setChecked(true);
         }
 
-
         login_Button = (Button) findViewById(R.id.button_login);
 
         login_Button.setOnClickListener(loginButtonOnClickListener);
@@ -334,7 +197,6 @@ public class ActivityLogin extends ActionBarActivity {
         dialog.setMessage("Proszę czekać.");
         dialog.setCancelable(false);
         dialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-
 
     }
 }

@@ -2,9 +2,6 @@ package com.dzordandev.snosand;
 
 import java.util.Date;
 
-/**
- * Created by marci on 15.02.2016.
- */
 public class ChartDataObject {
     public Date getDate() {
         return date;

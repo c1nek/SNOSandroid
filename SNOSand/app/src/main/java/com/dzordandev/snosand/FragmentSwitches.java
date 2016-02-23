@@ -33,9 +33,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
 
-/**
- * Created by marcin on 26.01.2016.
- */
 public class FragmentSwitches extends Fragment {
 
 
@@ -206,7 +203,7 @@ public class FragmentSwitches extends Fragment {
             public void run() {
                 dialog.dismiss();
             }
-        }, 2000);
+        }, 1000);
 
         loginPreferences = this.getActivity().getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
 
@@ -345,56 +342,56 @@ public class FragmentSwitches extends Fragment {
 
     private void setFields(CurrentSwitches values) {
 
-        if(values != null){
-        if (values.isLed1()) {
-            led1Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
-            led1_textView.setText("LED 1: ON");
-        } else {
-            led1Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
-            led1_textView.setText("LED 1: OFF");
-        }
-        if (values.isLed2()) {
-            led2Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
-            led2_textView.setText("LED 2: ON");
-        } else {
-            led2Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
-            led2_textView.setText("LED 2: OFF");
-        }
-        if (values.isLed3()) {
-            led3Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
-            led3_textView.setText("LED 3: ON");
-        } else {
-            led3Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
-            led3_textView.setText("LED 3: OFF");
-        }
-        if (values.isLed4()) {
-            led4Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
-            led4_textView.setText("LED 4: ON");
-        } else {
-            led4Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
-            led4_textView.setText("LED 4: OFF");
-        }
-        if (values.isSwitch1()) {
-            switch1Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
-            switch1_textView.setText("Kontakt 1: ON");
-        } else {
-            switch1Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
-            switch1_textView.setText("Kontakt 1: OFF");
-        }
-        if (values.isSwitch2()) {
-            switch2Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
-            switch2_textView.setText("Kontakt 2: ON");
-        } else {
-            switch2Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
-            switch2_textView.setText("Kontakt 2: OFF");
-        }
-        if (values.isSwitch3()) {
-            switch3Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
-            switch3_textView.setText("Kontakt 3: ON");
-        } else {
-            switch3Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
-            switch3_textView.setText("Kontakt 3: OFF");
-        }
+        if (values != null) {
+            if (values.isLed1()) {
+                led1Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
+                led1_textView.setText("LED 1: ON");
+            } else {
+                led1Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
+                led1_textView.setText("LED 1: OFF");
+            }
+            if (values.isLed2()) {
+                led2Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
+                led2_textView.setText("LED 2: ON");
+            } else {
+                led2Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
+                led2_textView.setText("LED 2: OFF");
+            }
+            if (values.isLed3()) {
+                led3Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
+                led3_textView.setText("LED 3: ON");
+            } else {
+                led3Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
+                led3_textView.setText("LED 3: OFF");
+            }
+            if (values.isLed4()) {
+                led4Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
+                led4_textView.setText("LED 4: ON");
+            } else {
+                led4Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
+                led4_textView.setText("LED 4: OFF");
+            }
+            if (values.isSwitch1()) {
+                switch1Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
+                switch1_textView.setText("Kontakt 1: ON");
+            } else {
+                switch1Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
+                switch1_textView.setText("Kontakt 1: OFF");
+            }
+            if (values.isSwitch2()) {
+                switch2Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
+                switch2_textView.setText("Kontakt 2: ON");
+            } else {
+                switch2Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
+                switch2_textView.setText("Kontakt 2: OFF");
+            }
+            if (values.isSwitch3()) {
+                switch3Layout.setBackgroundColor(Color.parseColor("#00A3E8"));
+                switch3_textView.setText("Kontakt 3: ON");
+            } else {
+                switch3Layout.setBackgroundColor(Color.parseColor("#A9A9A9"));
+                switch3_textView.setText("Kontakt 3: OFF");
+            }
 
 
             selectedColorR = Integer.parseInt(values.ledRGB.substring(0, 3));
@@ -405,8 +402,7 @@ public class FragmentSwitches extends Fragment {
             setRBGbuttonColor(rgbColor);
 
             cp = new ColorPicker(getActivity(), selectedColorR, selectedColorG, selectedColorB);
-        }
-        else{
+        } else {
             Toast.makeText(getActivity(), "Bład komunikacji z serwerem", Toast.LENGTH_SHORT);
         }
 
@@ -416,11 +412,4 @@ public class FragmentSwitches extends Fragment {
         rgbledLayout.setBackgroundColor(color);
     }
 
-/*
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((ActivityMain) activity).onSectionAttached(1);
-    }
-    */
 }

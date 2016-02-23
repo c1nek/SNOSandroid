@@ -39,10 +39,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-
-/**
- * Created by marci on 26.01.2016.
- */
 public class FragmentChar extends Fragment {
 
 
@@ -50,19 +46,19 @@ public class FragmentChar extends Fragment {
     BarChart chart;
     View rootView;
     Spinner spinnerType, spinnerPeroid;
-    List<ChartDataObject> valuesList = new ArrayList<ChartDataObject>();
+    List<ChartDataObject> valuesList;
     private SharedPreferences loginPreferences;
     private Button.OnClickListener showDataButtonOnClickListener = new Button.OnClickListener() {
         public void onClick(View arg0) {
 
-            //chart.clearValues();
-            valuesList = ParseJSON(QueryServer(loginPreferences.getString("serverToken", ""), spinnerType.getSelectedItemPosition(), spinnerPeroid.getSelectedItemPosition()));
+            valuesList = new ArrayList<ChartDataObject>(ParseJSON(QueryServer(loginPreferences.getString("serverToken", ""), spinnerType.getSelectedItemPosition(), spinnerPeroid.getSelectedItemPosition())));
             BarData data = new BarData(getXAxisValues(), getDataSet());
             chart.setData(data);
-            chart.setDrawValueAboveBar(false);
-            //chart.setDescription(" ");
+            chart.setDescription(" ");
             chart.animateXY(2000, 2000);
+            chart.setDrawValueAboveBar(false);
             chart.invalidate();
+
         }
     };
 
@@ -87,11 +83,6 @@ public class FragmentChar extends Fragment {
         showData = (Button) rootView.findViewById(R.id.button);
         showData.setOnClickListener(showDataButtonOnClickListener);
 
-        BarData data = new BarData(getXAxisValues(), getDataSet());
-        chart.setData(data);
-        chart.setDescription(" ");
-        chart.animateXY(2000, 2000);
-        chart.invalidate();
 
         return rootView;
     }
@@ -118,7 +109,7 @@ public class FragmentChar extends Fragment {
 
     private ArrayList<String> getXAxisValues() {
         ArrayList<String> xAxis = new ArrayList<>();
-        xAxis = null;
+        xAxis.clear();
         for (ChartDataObject element : valuesList) {
             String formattedDate = new SimpleDateFormat("dd.MM HH:mm").format(element.getDate());
             xAxis.add(formattedDate);
@@ -132,9 +123,6 @@ public class FragmentChar extends Fragment {
 
         String qString = loginPreferences.getString("serverIP", "") + "chart?androidToken=" + URLEncoder.encode(_token) + "&period=" + peroid + "&type=" + type;
         Log.i("char req", qString);
-
-        //String qString = "http://snos.ddns.net:2137/chart?androidToken=WT8CzkIQH0jZ4RdRsMYwVMtZbdatRJDFaXoJ26MLiqsKAbmobIacDF11qM8LWL5x&period=3&type=0
-
         HttpClient httpClient = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(qString);
 
@@ -170,6 +158,7 @@ public class FragmentChar extends Fragment {
 
         Date date;
         int val;
+        List<ChartDataObject> valuesListTemp = new ArrayList<ChartDataObject>();
 
         try {
             JSONArray jsonChartTab = new JSONArray(json);
@@ -178,20 +167,13 @@ public class FragmentChar extends Fragment {
                 date = new Date(jsonValObj.getLong("date"));
                 val = jsonValObj.getInt("value");
                 ChartDataObject temp = new ChartDataObject(date, val);
-                valuesList.add(temp);
+                valuesListTemp.add(temp);
             }
 
 
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        return valuesList;
+        return valuesListTemp;
     }
 }
-/*
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((ActivityMain) activity).onSectionAttached(1);
-    }
-    */

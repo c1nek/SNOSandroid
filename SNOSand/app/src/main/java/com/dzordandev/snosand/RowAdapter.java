@@ -11,9 +11,6 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by marci on 27.01.2016.
- */
 public class RowAdapter extends ArrayAdapter<RowBean> {
 
     Context context;
@@ -72,14 +69,11 @@ public class RowAdapter extends ArrayAdapter<RowBean> {
                 holder.txt_icon.setImageResource(R.mipmap.cold_alert);
                 break;
             case 5:
-                holder.txt_icon.setImageResource(R.mipmap.cold_alert);
+                holder.txt_icon.setImageResource(R.mipmap.move_alert);
                 break;
             default:
                 break;
-
-            //TODO brak ruchu!!!!!!!!!!!
         }
-
 
         return row;
     }

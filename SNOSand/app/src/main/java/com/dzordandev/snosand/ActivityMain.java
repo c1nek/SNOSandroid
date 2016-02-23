@@ -24,8 +24,17 @@ import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.http.HttpEntity;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.DefaultHttpClient;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.Reader;
 
 public class ActivityMain extends ActionBarActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -34,18 +43,12 @@ public class ActivityMain extends ActionBarActivity
     //////////////gcm////////////////////
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String TAG = "ActivityMain";
+    TextView login_TextView, car_TextView;
+    FragmentManager fragmentManager;
     private BroadcastReceiver mRegistrationBroadcastReceiver;
     private ProgressBar mRegistrationProgressBar;
     private TextView mInformationTextView;
-    //////////////gcm////////////////////
-
-    TextView login_TextView, car_TextView;
-
-    FragmentManager fragmentManager;
-
-
-
-
+    private SharedPreferences loginPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,30 +56,23 @@ public class ActivityMain extends ActionBarActivity
         setContentView(R.layout.activity_main);
         getSupportActionBar().hide();
 
-        //mRegistrationProgressBar = (ProgressBar) findViewById(R.id.registrationProgressBar);
+        loginPreferences = this.getSharedPreferences("loginPrefs", Context.MODE_PRIVATE);
+
         mRegistrationBroadcastReceiver = new BroadcastReceiver() {
             @Override
             public void onReceive(Context context, Intent intent) {
-                // mRegistrationProgressBar.setVisibility(ProgressBar.GONE);
                 SharedPreferences sharedPreferences =
                         PreferenceManager.getDefaultSharedPreferences(context);
                 boolean sentToken = sharedPreferences
                         .getBoolean(QuickstartPreferences.SENT_TOKEN_TO_SERVER, false);
-                if (sentToken) {
-                    // mInformationTextView.setText(getString(R.string.gcm_send_message));
-                } else {
-                    // mInformationTextView.setText(getString(R.string.token_error_message));
-                }
+
             }
         };
-        // mInformationTextView = (TextView) findViewById(R.id.informationTextView);
 
         if (checkPlayServices()) {
-            // Start IntentService to register this application with GCM.
             Intent intent = new Intent(this, RegistrationIntentService.class);
             startService(intent);
         }
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -90,19 +86,8 @@ public class ActivityMain extends ActionBarActivity
         Intent i = getIntent();
 
 
-//        toIntent = new objectToIntent((objectToIntent)i.getSerializableExtra("carClass"));
-        //      carInfo = toIntent.carInfo;
-        //      listaTankowan = toIntent.listaTankowan;
-
-
         View header = LayoutInflater.from(this).inflate(R.layout.nav_header_main, null);
         navigationView.addHeaderView(header);
-        //       login_TextView = (TextView) header.findViewById(R.id.loginTextView);
-        //       car_TextView = (TextView) header.findViewById(R.id.carTextView);
-
-
-//        login_TextView.setText(carInfo.getUser());
-        //       car_TextView.setText(carInfo.getProducent()+" " + carInfo.getModel());
 
         fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
@@ -126,7 +111,6 @@ public class ActivityMain extends ActionBarActivity
     public boolean onNavigationItemSelected(MenuItem item) {
 
         fragmentManager = getSupportFragmentManager();
-
 
         Class fragmentClass;
         switch (item.getItemId()) {
@@ -153,8 +137,9 @@ public class ActivityMain extends ActionBarActivity
 
             case R.id.nav_logout:
                 Intent myIntent = new Intent(ActivityMain.this, ActivityLogin.class);
-                myIntent.putExtra("carClass", 0); //Optional parameters
                 ActivityMain.this.startActivity(myIntent);
+                QueryServer(loginPreferences.getString("serverToken", ""), loginPreferences.getString("serverIP", ""));
+
                 break;
             default:
                 fragmentClass = FragmentData.class;
@@ -164,6 +149,43 @@ public class ActivityMain extends ActionBarActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private String QueryServer(String token, String SERVERIP) {
+
+        String Result = null;
+
+        String qString = SERVERIP + "logout?androidToken=" + token;
+
+        Log.i("dataHTTP", qString);
+
+        HttpClient httpClient = new DefaultHttpClient();
+        HttpGet httpGet = new HttpGet(qString);
+        try {
+            HttpEntity httpEntity = httpClient.execute(httpGet).getEntity();
+
+            if (httpEntity != null) {
+                InputStream inputStream = httpEntity.getContent();
+                Reader in = new InputStreamReader(inputStream);
+                BufferedReader bufferedreader = new BufferedReader(in);
+                StringBuilder stringBuilder = new StringBuilder();
+
+                String stringReadLine = null;
+
+                while ((stringReadLine = bufferedreader.readLine()) != null) {
+                    stringBuilder.append(stringReadLine + "\n");
+                }
+                Result = stringBuilder.toString();
+            }
+
+        } catch (ClientProtocolException e) {
+
+            e.printStackTrace();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+        return Result;
     }
 
 
@@ -202,6 +224,5 @@ public class ActivityMain extends ActionBarActivity
         }
         return true;
     }
-
 
 }
